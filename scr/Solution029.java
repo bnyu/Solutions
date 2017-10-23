@@ -1,4 +1,3 @@
-package p29;
 //https://gist.github.com/bnyu/7d70a2f7589a6a7da3fbe782ddcd8565
 // Accepted
 
@@ -7,7 +6,7 @@ package p29;
  * Divide two integers without using multiplication, division and mod operator.
  * If it is overflow, return MAX_INT.
  */
-class Solution {
+class Solution029 {
     public int divide(int dividend, int divisor) {
         if (dividend == 0)
             return 0;

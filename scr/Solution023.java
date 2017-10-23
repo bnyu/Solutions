@@ -1,4 +1,3 @@
-package p23;
 //https://gist.github.com/bnyu/427294abee04d95ea5a27ded0bddf65f
 // Accepted
 
@@ -9,7 +8,7 @@ import java.util.List;
  * 23. Merge k Sorted Lists
  * Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
  */
-class Solution {
+class Solution023 {
 
     public ListNode mergeKLists(ListNode[] lists) {
         ListNode node = new ListNode(0);

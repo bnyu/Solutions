@@ -1,4 +1,3 @@
-package p28;
 //https://gist.github.com/bnyu/7a8160d3521d5c9d22892caf91ddc226
 // Accepted
 
@@ -6,7 +5,7 @@ package p28;
  * 28. Implement strStr()
  * Returns the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
  */
-class Solution {
+class Solution028 {
     public int strStr(String haystack, String needle) {
         if (haystack.length() < needle.length())
             return -1;

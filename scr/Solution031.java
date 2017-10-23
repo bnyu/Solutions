@@ -1,4 +1,3 @@
-package p31;
 //https://gist.github.com/bnyu/ed580ff35b2cd6df379bfe71e90035a0
 // Wrong Answer
 
@@ -8,7 +7,7 @@ package p31;
  * If such arrangement is not possible, it must rearrange it as the lowest possible order (ie, sorted in ascending order).
  * The replacement must be in-place, do not allocate extra memory.
  */
-class Solution {
+class Solution031 {
     public void nextPermutation(int[] nums) {
         int sortedIndex = 0;
         int lastIndex = nums.length - 1;

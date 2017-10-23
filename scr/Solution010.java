@@ -1,4 +1,3 @@
-package p10;
 //https://gist.github.com/bnyu/edfb06d53c374af7ada23fcf44606e83
 // Accepted
 
@@ -11,7 +10,7 @@ import java.util.Map;
  * 10. Regular Expression Matching
  * Implement regular expression matching with support for '.' and '*'.
  */
-class Solution {
+class Solution010 {
     // 星号匹配的字符串 包括点字符
     private final Map<Integer, String> starMap = new HashMap<>();
     // 单个比配的字符串 包括点字符

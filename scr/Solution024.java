@@ -1,4 +1,3 @@
-package p24;
 //https://gist.github.com/bnyu/67279475ef0473b91b57d50a32998507
 // Accepted
 
@@ -8,7 +7,7 @@ package p24;
  * For example, Given 1->2->3->4, you should return the list as 2->1->4->3.
  * Your algorithm should use only constant space. You may not modify the values in the list, only nodes itself can be changed.
  */
-class Solution {
+class Solution024 {
     public ListNode swapPairs(ListNode head) {
         ListNode ans;
         if (head == null)

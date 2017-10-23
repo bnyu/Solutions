@@ -1,4 +1,3 @@
-package p3;
 //https://gist.github.com/bnyu/78dfc31c9b9e58a64ffa1a2dc2cf703d
 // Time Limit Exceeded
 
@@ -9,7 +8,7 @@ import java.util.Map;
  * 3. Longest Substring Without Repeating Characters
  * Given a string, find the length of the longest substring without repeating characters.
  */
-class Solution {
+class Solution003 {
     public int lengthOfLongestSubstring(String s) {
         if (s == null || s.isEmpty())
             return 0;

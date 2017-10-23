@@ -1,4 +1,3 @@
-package p11;
 //https://gist.github.com/bnyu/37530102b32e68d31230708d64216d47
 // Accepted
 
@@ -6,7 +5,7 @@ package p11;
  * 11. Container With Most Water
  * You may not slant the container and n is at least 2.
  */
-class Solution {
+class Solution011 {
     public int maxArea(int[] height) {
         int area = 0;
         int length = height.length;

@@ -1,4 +1,3 @@
-package p2;
 //https://gist.github.com/bnyu/dbbd629f0bc161e5342223061bf80766
 // Accepted
 
@@ -7,7 +6,7 @@ package p2;
  * You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
  * You may assume the two numbers do not contain any leading zero, except the number 0 itself.
  */
-class Solution {
+class Solution002 {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         int sum = l1.val + l2.val;
         int d1 = sum % 10;

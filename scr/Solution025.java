@@ -1,4 +1,3 @@
-package p25;
 //https://gist.github.com/bnyu/70b5b4b8935c41fee36ad02d66ce5feb
 // Accepted
 
@@ -13,7 +12,7 @@ import java.util.List;
  * You may not alter the values in the nodes, only nodes itself may be changed.
  * Only constant memory is allowed.
  */
-class Solution {
+class Solution025 {
 
     private List<ListNode> heads = new ArrayList<>();
     private List<ListNode> tails = new ArrayList<>();

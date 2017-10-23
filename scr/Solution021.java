@@ -1,4 +1,3 @@
-package p21;
 //https://gist.github.com/bnyu/f8f9b8efe230dfa398f7507d2c6ff4ce
 // Accepted
 
@@ -7,7 +6,7 @@ package p21;
  * Merge two sorted linked lists and return it as a new list.
  * The new list should be made by splicing together the nodes of the first two lists.
  */
-class Solution {
+class Solution021 {
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
         ListNode previous = new ListNode(0);
         final ListNode ans = previous;

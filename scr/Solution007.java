@@ -1,4 +1,3 @@
-package p7;
 //https://gist.github.com/bnyu/671c9da852d5e28a196469c30cba36b1
 // Accepted
 
@@ -6,7 +5,7 @@ package p7;
  * 7. Reverse Integer
  * Reverse digits of an integer.
  */
-class Solution {
+class Solution007 {
     public int reverse(int x) {
         // 0x80000000 = ~0x80000000 + 1
         if (x == Integer.MIN_VALUE)

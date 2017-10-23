@@ -1,4 +1,3 @@
-package p22;
 //https://gist.github.com/bnyu/246a3847090198c0d36d54923508d83d
 // Accepted
 
@@ -9,7 +8,7 @@ import java.util.List;
  * 22. Generate Parentheses
  * Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
  */
-class Solution {
+class Solution022 {
     private final List<String> ans = new ArrayList<>();
 
     public List<String> generateParenthesis(int n) {

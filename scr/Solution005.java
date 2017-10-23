@@ -1,4 +1,3 @@
-package p5;
 //https://gist.github.com/bnyu/a79f4548acfcaa99d4a3ac6b3f535e27
 // Accepted
 
@@ -6,7 +5,7 @@ package p5;
  * 5. Longest Palindromic Substring
  * Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000.
  */
-class Solution {
+class Solution005 {
     public String longestPalindrome(String s) {
         String ans;
         if (!s.isEmpty()) {

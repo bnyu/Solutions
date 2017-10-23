@@ -1,5 +1,3 @@
-package p2;
-
 public class ListNode {
     int val;
     ListNode next;

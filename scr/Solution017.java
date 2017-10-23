@@ -1,4 +1,3 @@
-package p17;
 //https://gist.github.com/bnyu/63a448a51fb8fc8c740b503491d3bdd6
 // Accepted
 
@@ -10,7 +9,7 @@ import java.util.List;
  * Given a digit string, return all possible letter combinations that the number could represent.
  * A mapping of digit to letters (just like on the telephone buttons) is given below.
  */
-class Solution {
+class Solution017 {
 
     private final List<String> ans = new ArrayList<>();
 

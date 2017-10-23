@@ -1,11 +1,10 @@
-package p6;
 //https://gist.github.com/bnyu/ded31f2eb23dc6a32967f10fe392273f
 // Accepted
 
 /**
  * 6. ZigZag Conversion
  */
-class Solution {
+class Solution006 {
     public String convert(String s, int numRows) {
         String ans;
         if (!s.isEmpty() && numRows > 0) {

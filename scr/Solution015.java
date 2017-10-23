@@ -1,4 +1,3 @@
-package p15;
 //https://gist.github.com/bnyu/30d032f7fa26a820b22cdf99978ebcd5
 // Time Limit Exceeded
 
@@ -9,7 +8,7 @@ import java.util.*;
  * Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
  * Note: The solution set must not contain duplicate triplets.
  */
-class Solution {
+class Solution015 {
     public List<List<Integer>> threeSum(int[] nums) {
         List<List<Integer>> ans = new ArrayList<>();
         int length = nums.length;

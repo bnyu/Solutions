@@ -1,4 +1,3 @@
-package p9;
 //https://gist.github.com/bnyu/9c3281891d7e65bc157a79c5976063b7
 // Accepted
 
@@ -9,7 +8,7 @@ import java.util.Map;
  * 9. Palindrome Number
  * Determine whether an integer is a palindrome. Do this without extra space.
  */
-class Solution {
+class Solution009 {
     public boolean isPalindrome(int x) {
         if (x < 0)
             return false;

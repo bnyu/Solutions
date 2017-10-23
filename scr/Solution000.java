@@ -1,4 +1,3 @@
-package p0;
 //https://gist.github.com/bnyu/73b55c48e7a9b80c01e3ce042f142524
 
 import java.util.ArrayList;
@@ -7,7 +6,7 @@ import java.util.List;
 /**
  * find all odds number smaller than target
  */
-public class Solution {
+public class Solution000 {
 
     private long bigOdd;
 
@@ -65,7 +64,7 @@ public class Solution {
 
 
     public static void main(String[] arg) {
-        Solution test = new Solution();
+        Solution000 test = new Solution000();
 
         test.findBiggestOdd(1000000000);
         System.out.println(test.getBigOdd());
