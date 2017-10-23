@@ -1,5 +1,5 @@
 //https://gist.github.com/bnyu/ed580ff35b2cd6df379bfe71e90035a0
-// Wrong Answer
+// Accepted
 
 /**
  * 31. Next Permutation
@@ -9,41 +9,41 @@
  */
 class Solution031 {
     public void nextPermutation(int[] nums) {
-        int sortedIndex = 0;
         int lastIndex = nums.length - 1;
         int index = lastIndex;
-        BreakFor:
-        for (; sortedIndex <= lastIndex; sortedIndex++) {
-            for (int i = sortedIndex + 1; i <= lastIndex; i++) {
-                if (nums[sortedIndex] > nums[i])
-                    break BreakFor;
-            }
+
+        // 尾部是最大序的前一个位置
+        int sortedIndex = lastIndex;
+        for (; sortedIndex > 0; sortedIndex--) {
+            if (nums[sortedIndex - 1] < nums[sortedIndex])
+                break;
         }
         sortedIndex--;
-        if (sortedIndex == lastIndex)
-            sortedIndex = -1;
+
         BreakFor:
         for (; index >= 0; index--) {
-            if (index <= sortedIndex) {
-                int temp = nums[lastIndex];
-                nums[lastIndex] = nums[sortedIndex];
-                nums[sortedIndex] = temp;
-                index = sortedIndex + 1;
+            if (sortedIndex < 0) {
+                index = -1;
                 break;
-            } else
-                for (int j = 1; index - j >= 0; j++) {
-                    if (index - j == sortedIndex)
-                        break;
-                    if (nums[index - j] < nums[index]) {
-                        int temp = nums[index - j];
-                        nums[index - j] = nums[index];
-                        nums[index] = temp;
-                        index = index - j + 1;
-                        break BreakFor;
-                    }
+            }
+            if (index == sortedIndex) {
+                sortedIndex--;
+                index = lastIndex;
+            }
+            for (int j = 1; index - j >= 0; j++) {
+                if (index - j < sortedIndex)
+                    break;
+                if (nums[index - j] < nums[index]) {
+                    int temp = nums[index - j];
+                    nums[index - j] = nums[index];
+                    nums[index] = temp;
+                    index = index - j + 1;
+                    break BreakFor;
                 }
+            }
         }
 
+        //已是最大序 变为最小序
         if (index == -1)
             index = 0;
         for (int i = index, j = lastIndex; i < j; i++, j--) {
