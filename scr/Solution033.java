@@ -16,7 +16,7 @@ class Solution033 {
             mid = (first + last) / 2;
             if (last - first <= 1)
                 break;
-            if (nums[mid] > nums[first])
+            if (nums[mid] >= nums[first])
                 first = mid;
             else last = mid;
         }
@@ -26,33 +26,19 @@ class Solution033 {
 
         first = 0;
         last = nums.length - 1;
-        if (target > nums[mid] || (target < nums[first] && target < nums[last]))
-            return -1;
-        if (target >= nums[first] && target <= nums[mid]) {
+        boolean possible = true;
+        if (target >= nums[first] && target <= nums[mid])
             last = mid;
-            while (true) {
-                mid = (first + last) / 2;
-                if (last - first <= 1)
-                    break;
-                if (target > nums[mid])
-                    first = mid;
-                else last = mid;
-            }
-        } else if (target >= nums[last]) {
-            if (mid == last) {
-                if (target == nums[last])
-                    return last;
-                else return -1;
-            }
+        else if (target <= nums[last] && mid < last && target >= nums[mid + 1])
             first = mid + 1;
-            while (true) {
-                mid = (last + first) / 2;
-                if (last - first <= 1)
-                    break;
-                if (target > nums[mid])
-                    last = mid;
-                else first = mid;
-            }
+        else possible = false;
+        while (possible) {
+            mid = (first + last) / 2;
+            if (last - first <= 1)
+                break;
+            if (target > nums[mid])
+                first = mid;
+            else last = mid;
         }
         if (target == nums[first])
             return first;
