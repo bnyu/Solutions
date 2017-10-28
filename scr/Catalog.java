@@ -24,7 +24,10 @@ public enum Catalog {
     implementStrStr(28, Solution028.class, Status.accepted),
     divideTwoIntegers(29, Solution029.class, Status.accepted),
     nextPermutation(31, Solution031.class, Status.accepted),
-    searchInRotatedSortedArray(33, Solution033.class, Status.accepted),;
+    searchInRotatedSortedArray(33, Solution033.class, Status.accepted),
+    searchForARange(34, Solution034.class, Status.accepted),
+    searchInsertPosition(35, Solution035.class, Status.accepted),
+    validSudoku(36, Solution036.class, Status.accepted);
 
     int number;
     Class solution;
