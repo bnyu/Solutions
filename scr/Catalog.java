@@ -27,7 +27,8 @@ public enum Catalog {
     searchInRotatedSortedArray(33, Solution033.class, Status.accepted),
     searchForARange(34, Solution034.class, Status.accepted),
     searchInsertPosition(35, Solution035.class, Status.accepted),
-    validSudoku(36, Solution036.class, Status.accepted);
+    validSudoku(36, Solution036.class, Status.accepted),
+    sudokuSolver(37, Solution037.class, Status.timeLimitExceeded);
 
     int number;
     Class solution;
