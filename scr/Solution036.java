@@ -1,4 +1,6 @@
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -11,48 +13,36 @@ public class Solution036 {
     public boolean isValidSudoku(char[][] board) {
         if (board.length != 9)
             return false;
-        Set<Character> set = new HashSet<>();
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 9; i++)
             if (board[i].length != 9)
                 return false;
+        Map<Integer, Set<Character>> map = new HashMap<>();
+        for (int i = 0; i < 9; i++)
             for (int j = 0; j < 9; j++) {
-                if (!isValid(board, i, j, set))
-                    return false;
-            }
-            set.clear();
-        }
-
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                if (!isValid(board, j, i, set))
-                    return false;
-            }
-            set.clear();
-        }
-
-        for (int k = 0; k < 3; k++) {
-            for (int i = 0; i < 3; i++) {
-                for (int j = 0; j < 9; j++) {
-                    if (!isValid(board, i * 3 + j / 3, k * 3 + j % 3, set)) {
+                char c = board[i][j];
+                if (c != '.')
+                    if (!isValid(i, j, c, map))
                         return false;
-                    }
-                }
-                set.clear();
             }
-        }
         return true;
     }
 
+    private boolean isValid(int i, int j, char c, Map<Integer, Set<Character>> map) {
+        if (map.containsKey(i)) {
+            if (map.get(i).contains(c))
+                return false;
+        } else map.put(i, new HashSet<>());
 
-    private boolean isValid(char[][] board, int i, int j, Set<Character> set) {
-        char dot = '.';
-        char c = board[i][j];
-        if (c == dot)
-            return true;
-        if (set.contains(c))
-            return false;
-        else
-            set.add(c);
+        if (map.containsKey(9 + j)) {
+            if (map.get(9 + j).contains(c))
+                return false;
+        } else map.put(9 + j, new HashSet<>());
+
+        if (map.containsKey(18 + i / 3 * 3 + j / 3)) {
+            if (map.get(18 + i / 3 * 3 + j / 3).contains(c))
+                return false;
+        } else map.put(18 + i / 3 * 3 + j / 3, new HashSet<>());
+
         return true;
     }
 
