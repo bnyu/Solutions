@@ -27,7 +27,8 @@ class Solution003 {
             else
                 characters.add(c);
         }
-        characters.clear();
+        if (dupCharSet.isEmpty())
+            return sLen;
         //分别记录重复字符位置
         for (int i = 0; i < sLen; i++) {
             char c = s.charAt(i);
@@ -39,6 +40,8 @@ class Solution003 {
                     duplicateIndex.get(c).add(i);
                 else {
                     List<Integer> list = new ArrayList<>();
+                    //首
+                    list.add(-1);
                     list.add(i);
                     duplicateIndex.put(c, list);
                 }
@@ -47,31 +50,33 @@ class Solution003 {
         dupCharSet.clear();
         //循环所有重复字符
         for (List<Integer> indexes : duplicateIndex.values()) {
-            //首
-            int lastIndex = 0;
             //尾
             indexes.add(sLen - 1);
-            //判断每个重复字符之前是否还有其他多次出现的重复字符
-            for (int index : indexes) {
-                int len = index - lastIndex;
-                if (len > maxLen) {
+            int indexLength = indexes.size();
+            //判断3个重复字符之间是否还有其他重复字符
+            for (int i = 0; i < indexLength - 1; i++) {
+                int leftIndex = indexes.get(i);
+                int rightIndex = i + 2 == indexLength ? indexes.get(i + 1) : indexes.get(i + 2);
+                if (rightIndex - leftIndex > maxLen) {
                     boolean hasOtherDup = false;
-                    for (int i = lastIndex + 1; i < index; i++) {
-                        if (dupCharMap.containsKey(i)) {
-                            char dupChar = dupCharMap.get(i);
+                    for (int index = leftIndex + 1; index <= rightIndex; index++) {
+                        if (dupCharMap.containsKey(index)) {
+                            char dupChar = dupCharMap.get(index);
                             if (dupCharSet.contains(dupChar)) {
+                                rightIndex = index;
                                 hasOtherDup = true;
                                 break;
-                            } else {
+                            } else
                                 dupCharSet.add(dupChar);
-                            }
+
                         }
                     }
                     dupCharSet.clear();
-                    if (!hasOtherDup)
+                    int needRemove = hasOtherDup ? 1 : 0;
+                    int len;
+                    if ((len = rightIndex - leftIndex - needRemove) > maxLen)
                         maxLen = len;
                 }
-                lastIndex = index;
             }
         }
         return maxLen;
