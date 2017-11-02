@@ -84,6 +84,7 @@ public class Solution037 {
             //此位置无合理猜测 删除上一个位置不合理猜测
             return false;
         } else {
+            //跳过不需要填写的位置
             int nextIndex = index + 1;
             for (; nextIndex < 81; nextIndex++)
                 if (needSolve.contains(nextIndex))
