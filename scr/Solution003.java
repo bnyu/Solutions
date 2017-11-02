@@ -1,5 +1,5 @@
 //https://gist.github.com/bnyu/78dfc31c9b9e58a64ffa1a2dc2cf703d
-// Time Limit Exceeded
+// Accepted
 
 import java.util.*;
 
