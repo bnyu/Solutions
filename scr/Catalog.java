@@ -2,7 +2,7 @@ public enum Catalog {
     findAllOdds(0, Solution000.class, Status.accepted),
     twoSum(1, Solution001.class, Status.accepted),
     addTwoNumbers(2, Solution002.class, Status.accepted),
-    longestSubstringWithoutRepeatingCharacters(3, Solution003.class, Status.timeLimitExceeded),
+    longestSubstringWithoutRepeatingCharacters(3, Solution003.class, Status.accepted),
     longestPalindromicSubstring(5, Solution005.class, Status.accepted),
     zigZagConversion(6, Solution006.class, Status.accepted),
     reverseInteger(7, Solution007.class, Status.accepted),
