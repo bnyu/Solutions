@@ -10,7 +10,7 @@ public enum Catalog {
     regularExpressionMatching(10, Solution010.class, Status.accepted),
     containerWithMostWater(11, Solution011.class, Status.accepted),
     longestCommonPrefix(14, Solution014.class, Status.accepted),
-    threeSum(15, Solution015.class, Status.timeLimitExceeded),
+    threeSum(15, Solution015.class, Status.accepted),
     letterCombinationsOfAPhoneNumber(17, Solution017.class, Status.accepted),
     removeNthNodeFromEndOfList(19, Solution019.class, Status.accepted),
     validParentheses(20, Solution020.class, Status.accepted),
