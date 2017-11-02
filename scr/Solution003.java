@@ -85,6 +85,7 @@ class Solution003 {
                             return maxLen;
                     }
                 }
+                //重复在下一个右侧 跳过下一个
                 i = dupIndex > midIndex ? i + 2 : i + 1;
             }
         }
