@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * 39. Combination Sum
@@ -25,7 +24,8 @@ public class Solution039 {
 
     private void combine(List<Integer> list, int[] candidates, int startIndex, int target) {
         if (target == 0) {
-            ans.add(list);
+            if (list != null)
+                ans.add(list);
             return;
         }
         for (int i = startIndex; i < candidates.length; i++) {
