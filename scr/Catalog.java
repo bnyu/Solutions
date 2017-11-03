@@ -29,7 +29,8 @@ public enum Catalog {
     searchInsertPosition(35, Solution035.class, Status.accepted),
     validSudoku(36, Solution036.class, Status.accepted),
     sudokuSolver(37, Solution037.class, Status.accepted),
-    combinationSum(39, Solution039.class, Status.accepted);
+    combinationSum(39, Solution039.class, Status.accepted),
+    combinationSum2(40, Solution040.class, Status.accepted),;
 
     int number;
     Class solution;

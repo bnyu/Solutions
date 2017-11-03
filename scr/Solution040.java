@@ -21,8 +21,12 @@ public class Solution040 {
     }
 
     private void combine(List<Integer> list, int[] candidates, int startIndex, int target) {
+        int lastNumber = -1;
         for (int i = startIndex; i < candidates.length; i++) {
             int number = candidates[i];
+            if (number == lastNumber)
+                continue;
+            lastNumber = number;
             int nextTarget = target - candidates[i];
             if (nextTarget >= 0) {
                 List<Integer> nextList = new ArrayList<>();
@@ -37,6 +41,7 @@ public class Solution040 {
         }
     }
 
+    //升序
     private void sort(int[] nums, int start, int end) {
         if (end <= start)
             return;
@@ -44,12 +49,12 @@ public class Solution040 {
         int left = start;
         int right = end;
         while (left < right) {
-            while (left < right && nums[left] >= meddle)
+            while (left < right && nums[left] <= meddle)
                 left++;
             if (left < right)
                 nums[right] = nums[left];
 
-            while (left < right && nums[right] <= meddle)
+            while (left < right && nums[right] >= meddle)
                 right--;
             if (left < right)
                 nums[left] = nums[right];

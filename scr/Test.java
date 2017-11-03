@@ -2,7 +2,7 @@ import java.util.List;
 
 public class Test {
     public static void main(String[] args) {
-        List<List<Integer>> ans = new Solution040().combinationSum2(new int[]{1, 7, 3, 2, 6, 8, 5}, 10);
+        List<List<Integer>> ans = new Solution040().combinationSum2(new int[]{10, 1, 2, 7, 6, 1, 5}, 10);
         for (List<Integer> list : ans) {
             for (int x : list)
                 System.out.print(x + " ");
