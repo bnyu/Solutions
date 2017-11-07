@@ -1,32 +1,30 @@
-//https://gist.github.com/bnyu/f8f9b8efe230dfa398f7507d2c6ff4ce
-// Accepted
-
 /**
  * 21. Merge Two Sorted Lists
  * Merge two sorted linked lists and return it as a new list.
  * The new list should be made by splicing together the nodes of the first two lists.
  */
 class Solution021 {
-    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
-        ListNode previous = new ListNode(0);
-        final ListNode ans = previous;
-        ListNode after;
-        while (l1 != null && l2 != null) {
-            int next;
-            if (l2.val < l1.val) {
-                next = l2.val;
-                l2 = l2.next;
+    fun mergeTwoLists(l1: ListNode?, l2: ListNode?): ListNode? {
+        var listNode1 = l1
+        var listNode2 = l2
+        var previous = ListNode(0)
+        val ans = previous
+        var after: ListNode
+        while (listNode1 != null && listNode2 != null) {
+            val next: Int
+            if (listNode2.`val` < listNode1.`val`) {
+                next = listNode2.`val`
+                listNode2 = listNode2.next
             } else {
-                next = l1.val;
-                l1 = l1.next;
+                next = listNode1.`val`
+                listNode1 = listNode1.next
             }
-            after = new ListNode(next);
-            previous.next = after;
-            previous = after;
+            after = ListNode(next)
+            previous.next = after
+            previous = after
         }
-        after = l1 == null ? l2 : l1;
-        previous.next = after;
-        return ans.next;
+        previous.next = if (listNode1 == null) listNode2 else listNode1
+        return ans.next
     }
 }
 

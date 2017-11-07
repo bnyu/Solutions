@@ -1,45 +1,42 @@
-//https://gist.github.com/bnyu/ded31f2eb23dc6a32967f10fe392273f
-// Accepted
-
 /**
  * 6. ZigZag Conversion
  */
 class Solution006 {
-    public String convert(String s, int numRows) {
-        String ans;
+    fun convert(s: String, numRows: Int): String {
+        val ans: String
         if (!s.isEmpty() && numRows > 0) {
             if (numRows == 1)
-                return s;
-            int length = s.length();
-            char[] chars = new char[length];
-            int lIndex;
-            int rIndex;
-            int count = 0;
-            int column = (length - 1) / (numRows - 1) / 2 + 1;
-            for (int j = 0; j <= numRows - 1; j++) {
-                for (int i = 0; i <= column; i++) {
-                    int index = 2 * i * (numRows - 1);
-                    lIndex = index - j;
-                    rIndex = index + j;
+                return s
+            val length = s.length
+            val chars = CharArray(length)
+            var lIndex: Int
+            var rIndex: Int
+            var count = 0
+            val column = (length - 1) / (numRows - 1) / 2 + 1
+            for (j in 0 until numRows) {
+                for (i in 0..column) {
+                    val index = 2 * i * (numRows - 1)
+                    lIndex = index - j
+                    rIndex = index + j
                     if (splice(chars, lIndex, length, count, s))
-                        count++;
+                        count++
                     if (j != 0 && j != numRows - 1)
                         if (splice(chars, rIndex, length, count, s))
-                            count++;
+                            count++
                 }
             }
-            ans = String.valueOf(chars);
+            ans = String(chars)
         } else
-            ans = "";
-        return ans;
+            ans = ""
+        return ans
     }
 
-    private boolean splice(char[] chars, int index, int length, int count, String s) {
-        if (index >= 0 && index < length) {
-            chars[count] = s.charAt(index);
-            return true;
+    private fun splice(chars: CharArray, index: Int, length: Int, count: Int, s: String): Boolean {
+        if (index in 0 until length) {
+            chars[count] = s[index]
+            return true
         }
-        return false;
+        return false
     }
 }
 

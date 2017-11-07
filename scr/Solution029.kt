@@ -1,78 +1,78 @@
-//https://gist.github.com/bnyu/7d70a2f7589a6a7da3fbe782ddcd8565
-// Accepted
-
 /**
  * 29. Divide Two Integers
  * Divide two integers without using multiplication, division and mod operator.
  * If it is overflow, return MAX_INT.
  */
 class Solution029 {
-    public int divide(int dividend, int divisor) {
-        if (dividend == 0)
-            return 0;
-        else if (divisor == 1)
-            return dividend;
-        else if (divisor == -1) {
-            dividend = ~dividend + 1;
-            if (dividend == Integer.MIN_VALUE)
-                return Integer.MAX_VALUE;
-            else return dividend;
-        } else if (dividend == divisor)
-            return 1;
-        boolean min = false;
-        if (dividend == Integer.MIN_VALUE) {
-            if (divisor == 2)
-                return Integer.MIN_VALUE >> 1;
-            if (divisor == -2)
-                return ~(Integer.MIN_VALUE >> 1) + 1;
+    fun divide(dividend: Int, divisor: Int): Int {
+        var dividendNum = dividend
+        var divisorNum = divisor
+        if (dividendNum == 0)
+            return 0
+        else if (divisorNum == 1)
+            return dividendNum
+        else if (divisorNum == -1) {
+            dividendNum = dividendNum.inv() + 1
+            return if (dividendNum == Integer.MIN_VALUE)
+                Integer.MAX_VALUE
+            else
+                dividendNum
+        } else if (dividendNum == divisorNum)
+            return 1
+        var min = false
+        if (dividendNum == Integer.MIN_VALUE) {
+            if (divisorNum == 2)
+                return Integer.MIN_VALUE shr 1
+            if (divisorNum == -2)
+                return (Integer.MIN_VALUE shr 1).inv() + 1
             //......
-            if (divisor == 3)
-                return -715827882;
-            if (divisor == -3)
-                return 715827882;
+            if (divisorNum == 3)
+                return -715827882
+            if (divisorNum == -3)
+                return 715827882
             //除以2以上都一样
-            dividend = Integer.MAX_VALUE;
-            min = true;
+            dividendNum = Integer.MAX_VALUE
+            min = true
         }
-        int quotient = 0;
+        var quotient = 0
         //都化成正数
-        boolean divisorNegative = false;
-        boolean dividendNegative = false;
-        if (dividend < 0) {
-            dividend = ~dividend + 1;
-            dividendNegative = true;
+        var divisorNegative = false
+        var dividendNegative = false
+        if (dividendNum < 0) {
+            dividendNum = dividendNum.inv() + 1
+            dividendNegative = true
         }
-        if (divisor < 0) {
-            divisor = ~divisor + 1;
-            divisorNegative = true;
+        if (divisorNum < 0) {
+            divisorNum = divisorNum.inv() + 1
+            divisorNegative = true
         }
-        if (dividend < divisor)
-            return 0;
+        if (dividendNum < divisorNum)
+            return 0
 
-        int up = 0;
+        var up = 0
         //被除数是2的幂次数
-        int temp = divisor - 1;
-        if ((divisor & temp) == 0) {
-            while ((temp & 0b1) == 0b1) {
-                temp = temp >> 1;
-                up++;
+        var temp = divisorNum - 1
+        if (divisorNum and temp == 0) {
+            while (temp and 1 == 1) {
+                temp = temp shr 1
+                up++
             }
         }
         if (up > 0) {
-            quotient = dividend >> up;
+            quotient = dividendNum shr up
         } else {
             //依次减
-            while (dividend >= 0 && divisor > 0 || dividend <= 0 && divisor < 0) {
-                dividend -= divisor;
-                quotient++;
+            while (dividendNum >= 0 && divisorNum > 0 || dividendNum <= 0 && divisorNum < 0) {
+                dividendNum -= divisorNum
+                quotient++
             }
-            quotient--;
+            quotient--
         }
-        if (dividendNegative ^ divisorNegative)
-            quotient = ~quotient + 1;
+        if (dividendNegative xor divisorNegative)
+            quotient = quotient.inv() + 1
         if (min)
-            quotient = ~quotient + 1;
-        return quotient;
+            quotient = quotient.inv() + 1
+        return quotient
     }
 }
 

@@ -1,9 +1,3 @@
-//https://gist.github.com/bnyu/70b5b4b8935c41fee36ad02d66ce5feb
-// Accepted
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * 25. Reverse Nodes in k-Group
  * Given a linked list, reverse the nodes of a linked list k at a time and return its modified list.
@@ -14,50 +8,51 @@ import java.util.List;
  */
 class Solution025 {
 
-    private List<ListNode> heads = new ArrayList<>();
-    private List<ListNode> tails = new ArrayList<>();
-    private int length = 0;
+    private val heads = ArrayList<ListNode>()
+    private val tails = ArrayList<ListNode>()
+    private var length = 0
 
-    public ListNode reverseKGroup(ListNode head, int k) {
+    fun reverseKGroup(head: ListNode?, k: Int): ListNode? {
         if (head == null)
-            return null;
-        heads.add(head);
-        reverse(head, k, 1);
-        int hSize = heads.size();
-        int tSize = tails.size();
+            return null
+        heads.add(head)
+        reverse(head, k, 1)
+        val hSize = heads.size
+        val tSize = tails.size
         if (k > length)
-            return head;
-        for (int i = 0; i < hSize; i++) {
-            ListNode previous = heads.get(i);
-            if (previous == null)
-                break;
-            ListNode after;
+            return head
+        for (i in 0 until hSize) {
+            val previous = heads[i]
+            val after: ListNode
             if (i + 1 < tSize)
-                after = tails.get(i + 1);
+                after = tails[i + 1]
             else if (i + 1 < hSize)
-                after = heads.get(i + 1);
-            else break;
-            previous.next = after;
+                after = heads[i + 1]
+            else
+                break
+            previous.next = after
         }
-        return tSize > 0 ? tails.get(0) : head;
+        return if (tSize > 0) tails[0] else head
     }
 
-    private ListNode reverse(final ListNode previous, final int k, int i) {
-        if (previous != null) {
-            length++;
-            if (i == k) {
-                final ListNode next = previous.next;
-                tails.add(previous);
-                heads.add(next);
-                reverse(next, k, 1);
-                return previous;
+    private fun reverse(previous: ListNode, k: Int, i: Int): ListNode {
+        var index = i
+        length++
+        if (index == k) {
+            val next = previous.next
+            if (next != null) {
+                tails.add(previous)
+                heads.add(next)
+                reverse(next, k, 1)
             }
-            final ListNode after = reverse(previous.next, k, ++i);
-            if (after != null) {
-                after.next = previous;
-                return previous;
-            } else return null;
-        } else return null;
+            return previous
+        }
+        val next = previous.next
+        if (next != null) {
+            val after = reverse(next, k, ++index)
+            after.next = previous
+        }
+        return previous
     }
 
 }

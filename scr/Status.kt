@@ -1,11 +1,7 @@
-public enum Status {
-    accepted("Accepted"),
-    timeLimitExceeded("Time Limit Exceeded"),
-    wrongAnswer("Wrong Answer"),;
+enum class Status constructor(internal val s: String) {
+    Accepted("Accepted"),
+    TimeLimitExceeded("Time Limit Exceeded"),
+    WrongAnswer("Wrong Answer"),
+    ;
 
-    final String s;
-
-    Status(String s) {
-        this.s = s;
-    }
 }

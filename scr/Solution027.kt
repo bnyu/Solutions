@@ -1,6 +1,3 @@
-//https://gist.github.com/bnyu/a860db09baa643caeb584402bd9d6fdd
-// Accepted
-
 /**
  * 27. Remove Element
  * Given an array and a value, remove all instances of that value in place and return the new length.
@@ -8,17 +5,17 @@
  * The order of elements can be changed. It doesn't matter what you leave beyond the new length.
  */
 class Solution027 {
-    public int removeElement(int[] nums, int val) {
-        if (nums.length == 0)
-            return 0;
-        int index = 0;
-        for (int x : nums) {
-            if (x != val) {
-                nums[index] = x;
-                index++;
+    fun removeElement(nums: IntArray, `val`: Int): Int {
+        if (nums.isEmpty())
+            return 0
+        var index = 0
+        for (x in nums) {
+            if (x != `val`) {
+                nums[index] = x
+                index++
             }
         }
-        return index;
+        return index
     }
 }
 

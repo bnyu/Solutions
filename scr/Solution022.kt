@@ -1,30 +1,26 @@
-//https://gist.github.com/bnyu/246a3847090198c0d36d54923508d83d
-// Accepted
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * 22. Generate Parentheses
  * Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
  */
 class Solution022 {
-    private final List<String> ans = new ArrayList<>();
+    private val ans = ArrayList<String>()
 
-    public List<String> generateParenthesis(int n) {
+    fun generateParenthesis(n: Int): List<String> {
         if (n > 0)
-            generate("", n, 0);
-        return ans;
+            generate("", n, 0)
+        return ans
     }
 
-    private void generate(String s, int leftLeft, int leftRight) {
+    private fun generate(s: String, leftLeft: Int, leftRight: Int) {
         if (leftLeft == 0 && leftRight == 0)
-            ans.add(s);
+            ans.add(s)
         else {
+            //剩余可用左括号 左括号数-1 右括号数+1
             if (leftLeft > 0)
-                generate(s + '(', leftLeft - 1, leftRight + 1);
+                generate(s + '(', leftLeft - 1, leftRight + 1)
+            //剩余可用右括号 右括号-1
             if (leftRight > 0)
-                generate(s + ')', leftLeft, leftRight - 1);
+                generate(s + ')', leftLeft, leftRight - 1)
         }
     }
 }

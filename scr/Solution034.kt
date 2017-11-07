@@ -4,60 +4,62 @@
  * Your algorithm's runtime complexity must be in the order of O(log n).
  * If the target is not found in the array, return [-1, -1].
  */
-public class Solution034 {
-    public int[] searchRange(int[] nums, int target) {
-        int first = 0;
-        int last = nums.length - 1;
+class Solution034 {
+    fun searchRange(nums: IntArray, target: Int): IntArray {
+        var first = 0
+        var last = nums.size - 1
         if (last < 0 || target < nums[first] || target > nums[last])
-            return new int[]{-1, -1};
+            return intArrayOf(-1, -1)
+        //找到target的一个位置
         while (true) {
             if (last - first <= 1) {
-                if (nums[first] != target && nums[last] != target)
-                    return new int[]{-1, -1};
-                else break;
+                return if (nums[first] != target && nums[last] != target)
+                    intArrayOf(-1, -1)
+                else
+                    break
             }
-            int mid = (first + last) / 2;
+            val mid = (first + last) / 2
             if (nums[mid] > target)
-                last = mid;
+                last = mid
             else if (nums[mid] < target)
-                first = mid;
-            else break;
+                first = mid
+            else
+                break
         }
-        int left = first;
-        int right = last;
-        if (nums[left] != target) {
+        var left = first
+        var right = last
+        left = findEdge(nums, first, last, target, left, false)
+        last = right
+        right = findEdge(nums, first, last, target, right, true)
+        return intArrayOf(left, right)
+    }
+
+    //找到左右边界
+    private fun findEdge(nums: IntArray, first: Int, last: Int, target: Int, leftOrRight: Int, findRight: Boolean): Int {
+        var left = first
+        var right = last
+        if (nums[leftOrRight] != target) {
             while (true) {
-                if (last - first <= 1) {
-                    if (nums[first] == target)
-                        left = first;
+                if (right - left <= 1) {
+                    return if (nums[leftOrRight] == target)
+                        if (findRight) right else left
                     else
-                        left = last;
-                    break;
+                        if (findRight) left else right
                 }
-                int mid = (first + last) / 2;
-                if (nums[mid] == target)
-                    last = mid;
-                else
-                    first = mid;
+                val mid = (left + right) / 2
+                if (nums[mid] == target) {
+                    if (!findRight)
+                        right = mid
+                    else
+                        left = mid
+                } else {
+                    if (!findRight)
+                        left = mid
+                    else
+                        right = mid
+                }
             }
         }
-        last = right;
-        if (nums[right] != target) {
-            while (true) {
-                if (last - first <= 1) {
-                    if (nums[last] == target)
-                        right = last;
-                    else
-                        right = first;
-                    break;
-                }
-                int mid = (first + last) / 2;
-                if (nums[mid] == target)
-                    first = mid;
-                else
-                    last = mid;
-            }
-        }
-        return new int[]{left, right};
+        return leftOrRight
     }
 }

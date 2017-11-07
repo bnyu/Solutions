@@ -1,69 +1,62 @@
-//https://gist.github.com/bnyu/63a448a51fb8fc8c740b503491d3bdd6
-// Accepted
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * 17. Letter Combinations of a Phone Number
  * Given a digit string, return all possible letter combinations that the number could represent.
  * A mapping of digit to letters (just like on the telephone buttons) is given below.
  */
 class Solution017 {
+    private val ans = ArrayList<String>()
 
-    private final List<String> ans = new ArrayList<>();
+    internal enum class Keyboard(private val num: Char, private val letter: String) {
+        K2('2', "abc"),
+        K3('3', "def"),
+        K4('4', "ghi"),
+        K5('5', "jkl"),
+        K6('6', "mno"),
+        K7('7', "pqrs"),
+        K8('8', "tuv"),
+        K9('9', "wxyz"),
+        K0('0', " ");
 
-    enum Keyboard {
-        _2('2', "abc"),
-        _3('3', "def"),
-        _4('4', "ghi"),
-        _5('5', "jkl"),
-        _6('6', "mno"),
-        _7('7', "pqrs"),
-        _8('8', "tuv"),
-        _9('9', "wxyz"),
-        _0('0', " "),;
-
-        Keyboard(char num, String letter) {
-            this.num = num;
-            this.letter = letter;
-        }
-
-        private final char num;
-        private final String letter;
-
-        public static String getLetter(char num) {
-            for (Keyboard keyboard : values())
-                if (num == keyboard.num)
-                    return keyboard.letter;
-            return "";
+        companion object {
+            fun getLetter(num: Char): String {
+                for (keyboard in values())
+                    if (num == keyboard.num)
+                        return keyboard.letter
+                return ""
+            }
         }
     }
 
 
-    public List<String> letterCombinations(String digits) {
+    fun letterCombinations(digits: String): List<String> {
         if (digits.isEmpty())
-            return new ArrayList<>(1);
-        final int digitsLength = digits.length();
-        final List<String> wolds = new ArrayList<>(digitsLength);
-        for (int i = 0; i < digitsLength; i++) {
-            String letter = Keyboard.getLetter(digits.charAt(i));
-            if (letter.isEmpty())
-                return new ArrayList<>(1);
-            wolds.add(letter);
+            return ArrayList(1)
+        val digitsLength = digits.length
+        //把每个按键对应的字母word依次放入wolds
+        val wolds = ArrayList<String>(digitsLength)
+        for (i in 0 until digitsLength) {
+            val word = Keyboard.getLetter(digits[i])
+            if (word.isEmpty())
+                return ArrayList(1)
+            wolds.add(word)
         }
-        combineLetter("", wolds, 0);
-        return ans;
+        combineLetter("", wolds, 0)
+        return ans
     }
 
-    private void combineLetter(String letter, List<String> words, int index) {
-        String word = words.get(index);
-        for (int i = 0; i < word.length(); i++) {
-            String newLetter = letter + word.charAt(i);
-            if (index == words.size() - 1)
-                ans.add(newLetter);
+    //一个按键一个的combine index:第几个按键
+    private fun combineLetter(letter: String, words: List<String>, index: Int) {
+        //当前按键的字母
+        val word = words[index]
+        for (i in 0 until word.length) {
+            //循环选出其中一个字母
+            val newLetter = letter + word[i]
+            //所有按键组合完
+            if (index == words.size - 1)
+                ans.add(newLetter)
+            //组合下一个按键
             else
-                combineLetter(newLetter, words, index + 1);
+                combineLetter(newLetter, words, index + 1)
         }
     }
 

@@ -1,75 +1,59 @@
-//https://gist.github.com/bnyu/73b55c48e7a9b80c01e3ce042f142524
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * find all odds number smaller than target
  */
-public class Solution000 {
+class Solution000 {
 
-    private long bigOdd;
+    var bigOdd: Long = 2
+        private set
 
-    public long getBigOdd() {
-        return bigOdd;
-    }
-
-    public void findBiggestOdd(long x) {
+    fun findBiggestOdd(x: Long) {
         if (x > bigOdd) {
-            for (long n = x; n > bigOdd; n--) {
-                boolean odd = true;
-                for (long i = 2; i <= n / i; i++) {
-                    if (n % i == 0) {
-                        odd = false;
-                        break;
+            for (n in x downTo bigOdd + 1) {
+                var odd = true
+                var i = 2
+                while (i <= n / i) {
+                    if (n % i == 0L) {
+                        odd = false
+                        break
                     }
+                    i++
                 }
                 if (odd) {
-                    bigOdd = n > bigOdd ? n : bigOdd;
-                    return;
+                    bigOdd = if (n > bigOdd) n else bigOdd
+                    return
                 }
             }
         }
     }
 
-    public List<Integer> findAllOdds(int x) {
-        final List<Integer> odds = new ArrayList<>();
+    fun findAllOdds(x: Int): List<Int> {
+        val odds: MutableList<Int> = mutableListOf()
         if (x >= 2) {
-            int i = 2;
-            odds.add(i);
-            i++;
-            int size = odds.size();
+            var i = 2
+            odds.add(i)
+            i++
+            var size = odds.size
             while (i <= x) {
-                boolean isOdd = true;
-                for (int index = 0; index < size; index++) {
-                    int odd = odds.get(index);
+                var isOdd = true
+                for (index in 0 until size) {
+                    val odd = odds[index]
                     if (i % odd != 0) {
-                        if (odd > i / odd) {
-                            break;
-                        }
+                        if (odd > i / odd)
+                            break
                     } else {
-                        isOdd = false;
-                        break;
+                        isOdd = false
+                        break
                     }
                 }
                 if (isOdd) {
-                    odds.add(i);
-                    size++;
+                    odds.add(i)
+                    size++
                 }
-                i += 2;
+                i += 2
             }
         }
-        return odds;
+        return odds
     }
 
-
-    public static void main(String[] arg) {
-        Solution000 test = new Solution000();
-
-        test.findBiggestOdd(1000000000);
-        System.out.println(test.getBigOdd());
-        List<Integer> odds = test.findAllOdds(10000000);
-        System.out.println(odds);
-    }
 }
 

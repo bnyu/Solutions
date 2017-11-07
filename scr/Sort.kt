@@ -1,4 +1,3 @@
-//https://gist.github.com/bnyu/e70fed1f80d060926e7c0bb2ae4e9e22
 
 //快排
 fun quickSort(x: Array<Int>, a: Int, b: Int) {

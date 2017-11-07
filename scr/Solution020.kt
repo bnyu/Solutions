@@ -1,7 +1,4 @@
-//https://gist.github.com/bnyu/d74f9f61b2fcfb544c48ddfafa158736
-// Accepted
-
-import java.util.*;
+import java.util.Stack
 
 /**
  * 20. Valid Parentheses
@@ -9,27 +6,26 @@ import java.util.*;
  * The brackets must close in the correct order, "()" and "()[]{}" are all valid but "(]" and "([)]" are not.
  */
 class Solution020 {
-    public boolean isValid(String s) {
-        Map<Character, Character> brackets = new HashMap<>();
-        brackets.put('(', ')');
-        brackets.put('[', ']');
-        brackets.put('{', '}');
-        Stack<Character> toMatch = new Stack<>();
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
+    fun isValid(s: String): Boolean {
+        val brackets = mutableMapOf(Pair('(', ')'), Pair('[', ']'), Pair('{', '}'))
+        val toMatch = Stack<Char>()
+        for (i in 0 until s.length) {
+            val c = s[i]
             if (!brackets.containsKey(c) && !brackets.containsValue(c))
-                continue;
+                continue
+            //左括号 入栈
             if (brackets.containsKey(c))
-                toMatch.push(brackets.get(c));
+                toMatch.push(brackets[c])
             else {
+                //右括号 出栈
                 if (toMatch.empty())
-                    return false;
-                char match = toMatch.pop();
+                    return false
+                val match = toMatch.pop()
                 if (match != c)
-                    return false;
+                    return false
             }
         }
-        return toMatch.empty();
+        return toMatch.empty()
     }
 }
 

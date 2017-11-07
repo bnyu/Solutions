@@ -1,42 +1,48 @@
-//https://gist.github.com/bnyu/37530102b32e68d31230708d64216d47
-// Accepted
-
 /**
  * 11. Container With Most Water
  * You may not slant the container and n is at least 2.
  */
 class Solution011 {
-    public int maxArea(int[] height) {
-        int area = 0;
-        int length = height.length;
-        int lHighest = 0;
-        boolean leftIsHigher = false;
-        for (int i = 0; i < length - 1; i++) {
-            int leftH = height[i];
+    fun maxArea(height: IntArray): Int {
+        var area = 0
+        val length = height.size
+        //左边最高
+        var lHighest = 0
+        var leftIsHigher = false
+        //左边边长 从左往右
+        for (i in 0 until length - 1) {
+            val leftH = height[i]
+            //除非比左边最高更高 再往右更小
             if (leftH <= lHighest)
-                continue;
+                continue
+            //已没有更高的
             if (leftIsHigher)
-                break;
-            lHighest = leftH;
-            int rHighest = 0;
-            for (int j = length - 1; j > i; j--) {
-                leftIsHigher = true;
-                int side = j - i;
-                int rightH = height[j];
-                int tempArea;
+                break
+            //当前左边边长
+            lHighest = leftH
+            //右边低于左边最高
+            var rHighest = 0
+            //右边边长 从右往左
+            for (j in length - 1 downTo i + 1) {
+                leftIsHigher = true
+                val side = j - i
+                val rightH = height[j]
+                val tempArea: Int
+                //右边比左边高
                 if (rightH >= leftH) {
-                    tempArea = leftH * side;
-                    area = Math.max(area, tempArea);
-                    leftIsHigher = false;
-                    break;
+                    tempArea = leftH * side
+                    area = Math.max(area, tempArea)
+                    leftIsHigher = false
+                    //右边再往左 再高也更小
+                    break
                 } else if (rightH > rHighest) {
-                    rHighest = rightH;
-                    tempArea = rHighest * side;
-                    area = Math.max(area, tempArea);
+                    rHighest = rightH
+                    tempArea = rHighest * side
+                    area = Math.max(area, tempArea)
                 }
             }
         }
-        return area;
+        return area
     }
 }
 
