@@ -10,11 +10,9 @@ import java.util.Set;
  * You may assume that there will be only one unique solution.
  */
 public class Solution037 {
-    private final Map<Integer, Set<Character>> defaultBoardMap = new HashMap<>();
     private final Map<Integer, Set<Character>> boardMap = new HashMap<>();
     private final char[] nums = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
     private final Set<Integer> needSolve = new HashSet<>();
-
 
     public void solveSudoku(char[][] board) {
         char[][] solve = new char[9][9];
@@ -26,26 +24,16 @@ public class Solution037 {
                     needSolve.add(9 * i + j);
                     continue;
                 }
-                changeBoard(i, j, c, defaultBoardMap, true);
+                changeBoard(i, j, c, boardMap, true);
             }
         }
-        for (int i = 0; i < 27; i++) {
-            Set<Character> newSet = new HashSet<>();
-            Set<Character> set = defaultBoardMap.get(i);
-            if (set != null)
-                newSet.addAll(set);
-            boardMap.put(i, newSet);
-        }
+        for (int i = 0; i < 27; i++)
+            if (!boardMap.containsKey(i))
+                boardMap.put(i, new HashSet<>());
 
         if (guessOneByOne(solve, 0))
             for (int i = 0; i < 9; i++)
                 System.arraycopy(solve[i], 0, board[i], 0, 9);
-    }
-
-    private void changeBoard(int index, char[][] solve, boolean add) {
-        int row = index / 9;
-        int col = index % 9;
-        changeBoard(row, col, solve[row][col], boardMap, add);
     }
 
     private void changeBoard(int i, int j, char c, Map<Integer, Set<Character>> map, boolean add) {
@@ -80,19 +68,6 @@ public class Solution037 {
         if (needSolve.contains(index)) {
             int row = index / 9;
             int col = index % 9;
-            //新的栈用新的棋盘的判断
-            for (int i = 0; i < 27; i++) {
-                Set<Character> newSet = boardMap.get(i);
-                newSet.clear();
-                Set<Character> defaultSet = defaultBoardMap.get(i);
-                if (defaultSet != null)
-                    newSet.addAll(defaultSet);
-            }
-            for (int solvedIndex : needSolve) {
-                if (solvedIndex < index) {
-                    changeBoard(solvedIndex, solve, true);
-                }
-            }
             //从1到9依次猜
             for (int i = 0; i < 9; i++) {
                 char n = nums[i];
