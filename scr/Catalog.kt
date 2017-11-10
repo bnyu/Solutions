@@ -24,6 +24,7 @@ enum class Catalog(internal val number: Int, internal val status: Status) {
     ImplementStrStr(28, Status.Accepted),
     DivideTwoIntegers(29, Status.Accepted),
     NextPermutation(31, Status.Accepted),
+    LongestValidParentheses(32, Status.Accepted),
     SearchInRotatedSortedArray(33, Status.Accepted),
     SearchForARange(34, Status.Accepted),
     SearchInsertPosition(35, Status.Accepted),
