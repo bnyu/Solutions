@@ -32,6 +32,7 @@ enum class Catalog(internal val number: Int, internal val status: Status) {
     CombinationSum(39, Status.Accepted),
     CombinationSum2(40, Status.Accepted),
     FirstMissingPositive(41, Status.Accepted),
+    TrappingRainWater(41, Status.Accepted),
     ;
 
 }
