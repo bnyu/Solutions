@@ -9,8 +9,7 @@ class Solution020 {
     fun isValid(s: String): Boolean {
         val brackets = mutableMapOf(Pair('(', ')'), Pair('[', ']'), Pair('{', '}'))
         val toMatch = Stack<Char>()
-        for (i in 0 until s.length) {
-            val c = s[i]
+        for (c in s) {
             if (!brackets.containsKey(c) && !brackets.containsValue(c))
                 continue
             //左括号 入栈
