@@ -26,29 +26,30 @@ class Solution044 {
         // 匹配先后顺序
         var count = 0
         while (index < length) {
-            var j = 0
-            // 多个连续星号 等于一个星号
-            while (index + j < length) {
-                if (star == p[index + j])
-                    j++
-                else break
-            }
-            index += when (j) {
-                0 -> {
-                    // 连续字符串
-                    if (charMap.containsKey(count)) {
-                        val cs = charMap[count] + p[index]
-                        charMap.put(count, cs)
-                    } else {
-                        count++
-                        charMap.put(count, p[index].toString())
+            count++
+            index += when (star) {
+                p[index] -> {
+                    // 多个连续星号 等于一个星号
+                    var i = 1
+                    while (index + i < length) {
+                        if (star == p[index + i])
+                            i++
+                        else break
                     }
-                    1
+                    starSet.add(count)
+                    i
                 }
                 else -> {
-                    count++
-                    starSet.add(count)
-                    j
+                    // 连续字符串
+                    var i = 1
+                    while (index + i < length) {
+                        if (star != p[index + i])
+                            i++
+                        else break
+                    }
+                    val str = p.substring(index, index + i)
+                    charMap.put(count, str)
+                    i
                 }
             }
         }

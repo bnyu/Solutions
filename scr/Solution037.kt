@@ -37,10 +37,10 @@ class Solution037 {
         var set: MutableSet<Char>
         var index: Int
         for (k in 0..2) {
-            when (k) {
-                0 -> index = i
-                1 -> index = 9 + j
-                else -> index = 18 + i / 3 * 3 + j / 3
+            index = when (k) {
+                0 -> i
+                1 -> 9 + j
+                else -> 18 + i / 3 * 3 + j / 3
             }
             if (boardMap.containsKey(index))
                 set = boardMap[index]!!
@@ -91,16 +91,16 @@ class Solution037 {
     //猜 合理则写入boardMap
     private fun guess(c: Char, i: Int, j: Int): Boolean {
         //横
-        val set = boardMap[i]
-        if (set!!.contains(c))
+        val set = boardMap[i]!!
+        if (set.contains(c))
             return false
         //竖
-        val set1 = boardMap[9 + j]
-        if (set1!!.contains(c))
+        val set1 = boardMap[9 + j]!!
+        if (set1.contains(c))
             return false
         //块
-        val set2 = boardMap[18 + i / 3 * 3 + j / 3]
-        if (set2!!.contains(c))
+        val set2 = boardMap[18 + i / 3 * 3 + j / 3]!!
+        if (set2.contains(c))
             return false
         set.add(c)
         set1.add(c)

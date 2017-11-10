@@ -7,11 +7,7 @@
 class Solution041 {
     fun firstMissingPositive(nums: IntArray): Int {
         val positiveNum = mutableSetOf<Int>()
-        for (n in nums) {
-            //过滤重复与非正
-            if (n > 0 && !positiveNum.contains(n))
-                positiveNum.add(n)
-        }
+        positiveNum.addAll(nums.filter { x -> x > 0 })
         for (i in 1..positiveNum.size)
             if (!positiveNum.contains(i))
                 return i
