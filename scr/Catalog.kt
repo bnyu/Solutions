@@ -35,6 +35,7 @@ enum class Catalog(internal val number: Int, internal val status: Status) {
     FirstMissingPositive(41, Status.Accepted),
     TrappingRainWater(42, Status.Accepted),
     WildcardMatching(44, Status.TimeLimitExceeded),
+    JumpGame2(45, Status.Accepted),
     ;
 
 }
