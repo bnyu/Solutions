@@ -14,7 +14,7 @@ class Solution048 {
         //从最外层到中心
         for (layer in 0 until size / 2) {
             //注意减去外层layer数 旋转移动
-            for (index in layer until last - layer) {
+            for (index in 0 until last - 2 * layer) {
                 val upLeft = matrix[layer][layer + index]
                 //upLeft 行不变,列往右
                 matrix[layer][layer + index] = matrix[last - layer - index][layer]
