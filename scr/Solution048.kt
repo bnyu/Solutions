@@ -15,14 +15,14 @@ class Solution048 {
         for (layer in 0 until size / 2) {
             //注意减去外层layer数 旋转移动
             for (index in layer until last - layer) {
-                val upLeft = matrix[layer][index]
+                val upLeft = matrix[layer][layer + index]
                 //upLeft 行不变,列往右
-                matrix[layer][index] = matrix[last - layer - index][layer]
+                matrix[layer][layer + index] = matrix[last - layer - index][layer]
                 //downLeft 列不变,行忘上
                 matrix[last - layer - index][layer] = matrix[last - layer][last - layer - index]
-                //downRight
+                //downRight 行不变,列往左
                 matrix[last - layer][last - layer - index] = matrix[layer + index][last - layer]
-                //upRight
+                //upRight 列不变,行往下
                 matrix[layer + index][last - layer] = upLeft
             }
         }
