@@ -1,4 +1,6 @@
-# Solutions
-把LeetCode上做的题集中放在这里。gist有时候上不去不是很方便。 https://gist.github.com/bnyu
+# LeetCode Algorithms Solutions
+最初前30题是用Java做的, 当时放在了我的gist上 然后为了方便建了这个GitHub库
 
-LeetCode终于支持Kotlin了。把之前的p01-p40, ctrl+alt+shift+k , 之后也就用Kotlin了
+刚好这时LeetCode突然支持Kotlin了, 于是改用Kotlin, 同时把之前的Java也转换成了Kotlin 
+
+现在又接触了Scala, 也挺喜欢的, 那就在这里一边学习一边使用吧. 哈哈

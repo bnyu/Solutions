@@ -39,6 +39,7 @@ enum class Catalog(internal val number: Int, internal val status: Status) {
     Permutations(46, Status.Accepted),
     Permutations2(47, Status.Accepted),
     RotateImage(47, Status.Accepted),
+    JumpGame(55, Status.Accepted),
     ;
 
 }
