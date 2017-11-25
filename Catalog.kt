@@ -54,6 +54,7 @@ enum class Catalog(val language: String, val problem: Int, val solution: S) {
     RotateImage(Kotlin, 48, S.Accepted),
 
     JumpGame(Scala, 55, S.Accepted),
+    MergeIntervals(Scala, 56, S.Accepted),
     ;
 
 }
