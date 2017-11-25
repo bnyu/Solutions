@@ -9,23 +9,23 @@ object Solution057 {
     //插入的左部分 不包括重叠
     val leftNum = intervals.indexWhere(i => i.end >= newInterval.start)
     val leftIntervals = if (leftNum < 0) intervals else intervals.take(leftNum)
-    val leftIndex = if (leftIntervals.isEmpty) -1 else leftNum
     //插入的右部分 不包括重叠
-    val (rightIndex, rightIntervals) = if (leftNum < 0) (-1, Nil) else {
+    val rightIntervals = if (leftNum < 0) Nil else {
       val rightIndex = intervals.indexWhere(i => i.start > newInterval.end, from = leftNum)
-      val rightIntervals = if (rightIndex < 0) Nil else intervals.drop(rightIndex)
-      (if (rightIndex < 0) -1 else rightIndex - 1, rightIntervals)
+      if (rightIndex < 0) Nil else intervals.drop(rightIndex)
     }
-    //产生重叠部分
-    val mayOverlap = (leftIndex, rightIndex) match {
-      case (-1, -1) => List(newInterval)
-      case (-1, _) => List(newInterval, intervals(rightIndex))
-      case (_, -1) => List(intervals(leftIndex), newInterval)
-      case _ => List(intervals(leftIndex), newInterval, intervals(rightIndex))
-    }
-    //用s56合并 虽然最多3个
-    val midInterval = Solution056 merge mayOverlap
-    leftIntervals ++ midInterval ++ rightIntervals
+    //可能有的重叠部分
+    val totalSize = intervals.size
+    if (leftIntervals.size < totalSize)
+      newInterval.start = math.min(newInterval.start, intervals(leftIntervals.size).start)
+    if (rightIntervals.size < totalSize)
+      newInterval.end = math.max(newInterval.end, intervals(totalSize - rightIntervals.size - 1).end)
+
+    if (leftIntervals.nonEmpty && leftIntervals.last.end >= newInterval.start || rightIntervals.nonEmpty && rightIntervals.head.start <= newInterval.end)
+      leftIntervals ++ rightIntervals
+    else
+      leftIntervals ++ List(newInterval) ++ rightIntervals
+
   }
 }
 
