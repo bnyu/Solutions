@@ -25,11 +25,14 @@ object Solution056 {
     var overlapping = false
     // 把所有与其重叠的拓展
     for (i <- list) {
-      if (i.start <= x.start && i.end >= x.start) {
+      if (x.start <= i.start && x.end >= i.end) {
+        i.start = x.start
+        i.end = x.end
+        overlapping = true
+      } else if (i.start >= x.start && i.start <= x.end) {
         i.end = math.max(i.end, x.end)
         overlapping = true
-      }
-      else if (x.start <= i.start && x.end >= i.start) {
+      } else if (i.end >= x.start && i.end <= x.end) {
         i.start = math.min(i.start, x.start)
         overlapping = true
       }
