@@ -55,7 +55,7 @@ enum class Catalog(val language: String, val problem: Int, val solution: S) {
 
     JumpGame(Scala, 55, S.Accepted),
     MergeIntervals(Scala, 56, S.Accepted),
-    MergeIntervals(Scala, 57, S.Accepted),
+    InsertInterval(Scala, 57, S.Accepted),
     ;
 
 }
