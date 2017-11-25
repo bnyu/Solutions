@@ -6,11 +6,6 @@ import scala.collection.mutable.ListBuffer
   * Given a collection of intervals, merge all overlapping intervals.
   * For example, Given [1,3],[2,6],[8,10],[15,18], return [1,6],[8,10],[15,18].
   */
-//Definition for an interval:
-class Interval(var _start: Int = 0, var _end: Int = 0) {
-  var start: Int = _start
-  var end: Int = _end
-}
 
 object Solution056 {
   def merge(intervals: List[Interval]): List[Interval] = {
@@ -37,3 +32,4 @@ object Solution056 {
   }
 
 }
+
