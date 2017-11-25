@@ -14,35 +14,26 @@ class Interval(var _start: Int = 0, var _end: Int = 0) {
 
 object Solution056 {
   def merge(intervals: List[Interval]): List[Interval] = {
-    if (intervals.isEmpty)
-      intervals
-    else
-      toMerge(intervals.head, intervals.tail, ListBuffer()).toList
+    toMerge(intervals, ListBuffer()).toList
   }
 
   @tailrec
-  def toMerge(x: Interval, list: List[Interval], unique: ListBuffer[Interval]): ListBuffer[Interval] = {
-    var overlapping = false
-    // 把所有与其重叠的拓展
-    for (i <- list) {
-      if (x.start <= i.start && x.end >= i.end) {
-        i.start = x.start
-        i.end = x.end
-        overlapping = true
-      } else if (i.start >= x.start && i.start <= x.end) {
-        i.end = math.max(i.end, x.end)
-        overlapping = true
-      } else if (i.end >= x.start && i.end <= x.end) {
-        i.start = math.min(i.start, x.start)
-        overlapping = true
+  def toMerge(list: List[Interval], unique: ListBuffer[Interval]): ListBuffer[Interval] = {
+    if (list.nonEmpty) {
+      val x = list.head
+      // 把所有与其重叠的拓展
+      var overlapping = false
+      for (i <- list.tail) {
+        if (x.end >= i.start && x.start <= i.end) {
+          i.start = math.min(i.start, x.start)
+          i.end = math.max(i.end, x.end)
+          overlapping = true
+        }
       }
-    }
-    if (!overlapping)
-      unique += x
-    if (list.nonEmpty)
-      toMerge(list.head, list.tail, unique)
-    else
-      unique
+      if (!overlapping)
+        unique += x
+      toMerge(list.tail, unique)
+    } else unique
   }
 
 }
