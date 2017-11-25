@@ -6,31 +6,26 @@
   */
 object Solution057 {
   def insert(intervals: List[Interval], newInterval: Interval): List[Interval] = {
-    //插入的左部分
+    //插入的左部分 不包括重叠
     val leftNum = intervals.indexWhere(i => i.end >= newInterval.start)
-    val leftIntervals = if (leftNum < 0) {
-      intervals
-    } else {
-      if (leftNum < intervals.size) {
-        val left = intervals(leftNum)
-        if (left.start < newInterval.start)
-          newInterval.start = left.start
-      }
-      intervals.take(leftNum)
+    val leftIntervals = if (leftNum < 0) intervals else intervals.take(leftNum)
+    val leftIndex = if (leftIntervals.isEmpty) -1 else leftNum
+    //插入的右部分 不包括重叠
+    val (rightIndex, rightIntervals) = if (leftNum < 0) (-1, Nil) else {
+      val rightIndex = intervals.indexWhere(i => i.start > newInterval.end, from = leftNum)
+      val rightIntervals = if (rightIndex < 0) Nil else intervals.drop(rightIndex)
+      (if (rightIndex < 0) -1 else rightIndex - 1, rightIntervals)
     }
-    //插入的右部分
-    val rightIndex = if (leftNum < 0) intervals.size else intervals.indexWhere(i => i.start > newInterval.end, from = leftNum)
-    val rightIntervals = if (rightIndex < 0) {
-      intervals
-    } else {
-      if (rightIndex > 0) {
-        val right = intervals(rightIndex - 1)
-        if (right.end > newInterval.end)
-          newInterval.end = right.end
-      }
-      intervals.drop(rightIndex)
+    //产生重叠部分
+    val mayOverlap = (leftIndex, rightIndex) match {
+      case (-1, -1) => List(newInterval)
+      case (-1, _) => List(newInterval, intervals(rightIndex))
+      case (_, -1) => List(intervals(leftIndex), newInterval)
+      case _ => List(intervals(leftIndex), newInterval, intervals(rightIndex))
     }
-    leftIntervals ++ List(newInterval) ++ rightIntervals
+    //用s56合并 虽然最多3个
+    val midInterval = Solution056 merge mayOverlap
+    leftIntervals ++ midInterval ++ rightIntervals
   }
 }
 
