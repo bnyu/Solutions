@@ -1,5 +1,6 @@
 object Test {
   def main(arg: Array[String]) {
-    print(Solution055.canJump(Array(3, 3, 1, 0, 4)))
+    val list = List(new Interval(1, 4), new Interval(1, 5))
+    Solution056.merge(list)
   }
 }
