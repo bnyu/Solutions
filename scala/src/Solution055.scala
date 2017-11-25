@@ -13,11 +13,12 @@ object Solution055 {
 
     @tailrec
     def jump(nums: Array[Int]): Boolean = {
-      val indexes = for (i <- nums.indices if nums(i) > i) yield i
-      if (indexes.isEmpty)
+      //修改 不需要yield 只需要最远的那个
+      val index = nums.indices.reverse.find(i => nums(i) > i)
+      if (index.isEmpty)
         nums.isEmpty
       else
-        jump(nums.drop(indexes.last + 1))
+        jump(nums.drop(index.get + 1))
     }
 
     jump(nums.reverse.tail)
