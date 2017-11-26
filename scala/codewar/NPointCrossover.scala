@@ -5,9 +5,14 @@ import scala.annotation.tailrec
   */
 object NPointCrossover {
   def crossover[T](ns: List[Int], xs: List[T], ys: List[T]): (List[T], List[T]) = {
-    val indexes = (List(0) ++ ns ++ List(xs.size)).sorted.distinct
-    if (indexes.size < 2) (xs, ys)
-    else cross(indexes, Nil, Nil, xs, ys)
+    var indexes = (ns ++ List(xs.size)).sorted.distinct
+    //从第0个开始交换
+    val (uncrossedX, uncrossedY) = if (indexes.head == 0) (ys, xs) else {
+      indexes = List(0) ++ indexes
+      (xs, ys)
+    }
+    if (indexes.size < 2) (uncrossedX, uncrossedY)
+    else cross(indexes, Nil, Nil, uncrossedX, uncrossedY)
   }
 
   @tailrec
