@@ -5,7 +5,7 @@ import scala.collection.mutable
   * or ')' if that character appears more than once in the original string. Ignore capitalization when determining if a character is a duplicate.
   */
 object DuplicateEncoder {
-  def duplicateEncode(word: String) = {
+  def duplicateEncode(word: String): String = {
     val str = word.toLowerCase
     val characters = mutable.HashMap[Char, Int]()
     val sList = mutable.MutableList.fill(str.length)('(')
