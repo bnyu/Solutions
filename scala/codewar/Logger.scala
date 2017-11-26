@@ -8,7 +8,7 @@ object Logger {
     val im = complex(1)
     val model = math.sqrt(re * re + im * im)
     if (model == 0) throw new ArithmeticException("")
-    val angle = math.asin(im / model)
+    val angle = if (im == 0 && re < 0) math.acos(-1) else math.asin(im / model)
     Array(math.log(model), angle)
   }
 }
