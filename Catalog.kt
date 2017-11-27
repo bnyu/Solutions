@@ -13,6 +13,7 @@ enum class S {
 
 enum class Catalog(val language: String, val problem: Int, val solution: S) {
     FindAllOdds(Kotlin, 0, S.Accepted),
+    //LeetCode
     TwoSum(Kotlin, 1, S.Accepted),
     AddTwoNumbers(Kotlin, 2, S.Accepted),
     LongestSubstringWithoutRepeatingCharacters(Kotlin, 3, S.Accepted),
@@ -56,6 +57,11 @@ enum class Catalog(val language: String, val problem: Int, val solution: S) {
     JumpGame(Scala, 55, S.Accepted),
     MergeIntervals(Scala, 56, S.Accepted),
     InsertInterval(Scala, 57, S.Accepted),
+
+    //CodeWar
+    NPointCrossover(Scala, -1, S.Accepted),
+    DuplicateEncoder(Scala, -1, S.TimeLimitExceeded),
+    Logger(Scala, -1, S.WrongAnswer),
     ;
 
 }
