@@ -15,7 +15,7 @@ object UniquePaths {
         paths.getOrElseUpdate((m - 1, n), move(m - 1, n)) + paths.getOrElseUpdate((m, n - 1), move(m, n - 1))
     }
 
-    if (m <= 0 || n <= 0) 0 else if (m == 1 || n == 1) 1 else move(m, n - 1) + move(m - 1, n)
+    move(m, n)
   }
 
 }
