@@ -6,15 +6,15 @@
 object UniquePaths {
   def uniquePaths(m: Int, n: Int): Int = {
 
-    def upMove(m: Int, n: Int, x: Int): Int = {
-      if (m <= 0) 0 else if (m == 1) 1 + x else upMove(m - 1, n, x) + leftMove(m, n - 1, x) + x
+    def upMove(m: Int, n: Int): Int = {
+      if (m <= 0) 0 else if (m == 1) 1 else upMove(m - 1, n) + leftMove(m, n - 1)
     }
 
-    def leftMove(m: Int, n: Int, x: Int): Int = {
-      if (n <= 0) 0 else if (n == 1) 1 + x else upMove(m - 1, n, x) + leftMove(m, n - 1, x) + x
+    def leftMove(m: Int, n: Int): Int = {
+      if (n <= 0) 0 else if (n == 1) 1 else upMove(m - 1, n) + leftMove(m, n - 1)
     }
 
-    if (m <= 0 || n <= 0) 0 else if (m == 1 || n == 1) 1 else leftMove(m, n - 1, 0) + upMove(m - 1, n, 0)
+    if (m <= 0 || n <= 0) 0 else if (m == 1 || n == 1) 1 else leftMove(m, n - 1) + upMove(m - 1, n)
   }
 
 }
