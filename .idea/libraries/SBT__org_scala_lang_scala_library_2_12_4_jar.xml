@@ -15,7 +15,6 @@
     <JAVADOC />
     <SOURCES>
       <root url="jar://$USER_HOME$/.sbt/boot/scala-2.12.4/lib/scala-library-2.12.4-sources.jar!/" />
-      <root url="jar://$USER_HOME$/.sbt/boot/scala-2.12.4/lib/scala-library-2.12.4-sources.jar!/" />
     </SOURCES>
   </library>
 </component>
