@@ -7,19 +7,15 @@ import scala.collection.mutable
   */
 object UniquePaths {
   def uniquePaths(m: Int, n: Int): Int = {
+    //cache
     val paths: mutable.HashMap[(Int, Int), Int] = mutable.HashMap()
 
-    def upMove(m: Int, n: Int): Int = {
-      if (m <= 0) 0 else if (m == 1) 1 else
-        paths.getOrElseUpdate((m - 1, n), upMove(m - 1, n)) + paths.getOrElseUpdate((m, n - 1), leftMove(m, n - 1))
+    def move(m: Int, n: Int): Int = {
+      if (m <= 0 || n <= 0) 0 else if (m == 1 || n == 1) 1 else
+        paths.getOrElseUpdate((m - 1, n), move(m - 1, n)) + paths.getOrElseUpdate((m, n - 1), move(m, n - 1))
     }
 
-    def leftMove(m: Int, n: Int): Int = {
-      if (n <= 0) 0 else if (n == 1) 1 else
-        paths.getOrElseUpdate((m - 1, n), upMove(m - 1, n)) + paths.getOrElseUpdate((m, n - 1), leftMove(m, n - 1))
-    }
-
-    if (m <= 0 || n <= 0) 0 else if (m == 1 || n == 1) 1 else leftMove(m, n - 1) + upMove(m - 1, n)
+    if (m <= 0 || n <= 0) 0 else if (m == 1 || n == 1) 1 else move(m, n - 1) + move(m - 1, n)
   }
 
 }
