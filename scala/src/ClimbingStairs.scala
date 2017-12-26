@@ -9,10 +9,15 @@ object ClimbingStairs {
   def climbStairs(n: Int): Int = {
     val cache = mutable.HashMap[Int, Int]()
 
-    def climb(n: Int): Int = {
-      if (n < 0) 0 else if (n == 0) 1 else cache.getOrElseUpdate(n, climb(n - 2) + climb(n - 1))
+    //n:剩余阶梯数 x:已走步数
+    def climb(n: Int, x: Int): Int = if (n < 0) x else {
+      // 上一步加上上上步
+      val steps = x + cache.getOrElse(n + 2, 0)
+      cache.update(n, steps)
+      //接着走下一步
+      climb(n - 1, steps)
     }
 
-    climb(n)
+    if (n > 0) climb(n, 1) else 0
   }
 }
