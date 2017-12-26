@@ -4,12 +4,16 @@
 object SqrtX {
   def mySqrt(x: Int): Int = {
     if (x <= 0) 0 else {
-      var n = 1
-      while (x / n > n)
-        n *= 2
-      while (x / n < n)
-        n -= 1
-      n
+      var n1 = 1
+      while (x / n1 > n1)
+        n1 *= 2
+      var n0 = n1 / 2
+      //n in (n0, n1]
+      while (x / n1 < n1)
+        n1 = (n0 + n1) / 2
+      while (x / n1 >= n1)
+        n1 += 1
+      n1 - 1
     }
   }
 }
