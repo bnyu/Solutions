@@ -6,8 +6,8 @@
 object ClimbingStairs {
   def climbStairs(n: Int): Int = {
     //n:剩余阶梯数 x:到这步总数 x0:上一步时总数 (Fibonacci sequence)
-    def climb(n: Int, x: Int, x0: Int): Int = if (n < 0) x else climb(n - 1, x + x0, x)
+    def climb(n: Int, x: Int, x0: Int): Int = if (n == 0) x else climb(n - 1, x + x0, x)
 
-    if (n > 2) climb(n - 3, 2, 1) else if (n == 2) 2 else if (n == 1) 1 else 0
+    if (n > 2) climb(n - 2, 2, 1) else if (n == 2) 2 else if (n == 1) 1 else 0
   }
 }
