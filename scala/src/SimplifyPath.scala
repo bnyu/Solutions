@@ -12,26 +12,34 @@ object SimplifyPath {
 
     def enterPath(path: String, index: Int): Int = {
       if (path != null && path.nonEmpty) {
-        val c = path.head
-        if (c == slash)
-          enterPath(path.tail, index)
-        else if (c == dot)
-          if (path.tail != null && path.tail.head == dot) enterPath(path.tail.tail, index - 1) else enterPath(path.tail, index)
+        val head = path.head
+        val tail = path.tail
+        if (head == slash)
+          enterPath(tail, index)
+        //ok ... 居然是合法路径
+        else if (head == dot && tail != null && tail.nonEmpty && tail.head == dot && (tail.tail == null || tail.tail.isEmpty || tail.tail.head == slash))
+          enterPath(tail.tail, index - 1)
+        else if (head == dot && (tail == null || tail.isEmpty || tail.head == slash))
+          enterPath(tail, index)
         else {
           val i = path.indexWhere(_ == slash)
-          val folder = path.take(i)
-          val folders = path.drop(i + 1)
-          paths.update(index, folder)
-          enterPath(folders, index + 1)
+          val (head, tail) = if (i > 0) (path.take(i), path.drop(i + 1)) else (path, null)
+          paths.update(index, head)
+          enterPath(tail, index + 1)
         }
       } else index
     }
 
-    val index = enterPath(path, 0)
-    if (index <= 0) {
-      ???
-    } else {
-      ???
+    // 不用考虑输入路径曾到达上级目录 而且输入必须以“/”开始 即index>0
+    val index = enterPath(path, 1)
+    var i = 0
+
+    def pathStr = {
+      i += 1
+      paths(i)
     }
+
+    val list = Array.fill(index - 1)(pathStr)
+    list.mkString("/", "/", "")
   }
 }
