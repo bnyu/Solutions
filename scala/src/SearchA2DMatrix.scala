@@ -7,18 +7,21 @@ object SearchA2DMatrix {
   def searchMatrix(matrix: Array[Array[Int]], target: Int): Boolean = {
     val m = if (matrix != null) matrix.length else 0
     val n = if (m > 0) matrix(0).length else 0
-    var found = false
     if (n > 0) {
-      var row = matrix(0)
-      for (i <- 0 until m if !found) {
-        if (matrix(i)(n - 1) >= target) {
-          found = true
-          row = matrix(i)
-        }
+      var i0 = 0
+      var i1 = m - 1
+      while (i1 - i0 > 1) {
+        val i = (i0 + i1) / 2
+        if (matrix(i)(0) > target) i1 = i else i0 = i
       }
-      found = false
-      for (x <- row) if (x == target) found = true
-    }
-    found
+      val row = if (matrix(i1)(0) > target) i0 else i1
+      i0 = 0
+      i1 = n - 1
+      while (i1 - i0 > 1) {
+        val i = (i0 + i1) / 2
+        if (matrix(row)(i) > target) i1 = i else i0 = i
+      }
+      matrix(row)(i0) == target || matrix(row)(i1) == target
+    } else false
   }
 }
