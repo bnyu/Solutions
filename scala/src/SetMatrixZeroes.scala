@@ -11,7 +11,7 @@ object SetMatrixZeroes {
       val rows = mutable.HashSet[Int]()
       val columns = mutable.HashSet[Int]()
       for {i <- 0 until m; j <- 0 until n if matrix(i)(j) == 0} {
-        // +=函数即add, 并没有修改val指向对象, 不等同于rows = rows + i (scala没有+=操作符)
+        // +=函数即add, 并没有修改val指向对象, 不等同于rows = rows + i (scala没有++操作符, +=也只是普通函数)
         rows += i
         columns += j
       }
