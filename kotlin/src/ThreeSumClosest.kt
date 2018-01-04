@@ -38,7 +38,7 @@ class ThreeSumClosest {
         numNum.add(Pair(numList[size - 1], n))
 
         val uniqueSize = numNum.size
-        val partSumList = mutableListOf<Triple<Int, Int, Int>>()
+        val partSumList = mutableListOf<Triple<Int, Boolean, Int>>()
         for (i in 0 until uniqueSize) {
             val a = numNum[i].first
             val aNum = numNum[i].second
@@ -47,21 +47,22 @@ class ThreeSumClosest {
                 val b = numNum[j].first
                 val bNum = numNum[j].second
                 val partSum = a + b
-                partSumList.add(Triple(partSum, bNum, j))
+                val canEqualB = bNum > 2 || bNum > 1 && i != j
+                partSumList.add(Triple(partSum, canEqualB, j))
             }
         }
 
         for (triple in partSumList) {
             val partNum = triple.first
             val needNum = target - partNum
-            var first = if (triple.second <= 2) triple.third + 1 else triple.third
+            var first = if (triple.second) triple.third else triple.third + 1
             var end = uniqueSize - 1
             if (first > end)
                 continue
-            if (numList[end] > needNum && numList[first] < needNum) {
+            if (numNum[end].first > needNum && numNum[first].first < needNum) {
                 while (end - first > 1) {
                     val mid = (end + first) / 2
-                    val c = numList[mid]
+                    val c = numNum[mid].first
                     if (needNum == c)
                         return target
                     if (needNum > c)
@@ -70,10 +71,10 @@ class ThreeSumClosest {
                         first = mid
                 }
             }
-            val fDiff = Math.abs(numList[first] - needNum)
-            val eDiff = Math.abs(numList[end] - needNum)
-            when {fDiff <= eDiff && fDiff < sumPair.first -> sumPair = Pair(fDiff, partNum + numList[first])
-                eDiff < sumPair.first -> sumPair = Pair(eDiff, partNum + numList[end])
+            val fDiff = Math.abs(numNum[first].first - needNum)
+            val eDiff = Math.abs(numNum[end].first - needNum)
+            when {fDiff <= eDiff && fDiff < sumPair.first -> sumPair = Pair(fDiff, partNum + numNum[first].first)
+                eDiff < sumPair.first -> sumPair = Pair(eDiff, partNum + numNum[end].first)
             }
             if (sumPair.first == 0)
                 return sumPair.second
