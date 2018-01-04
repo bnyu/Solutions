@@ -56,7 +56,9 @@ class ThreeSumClosest {
             val needNum = target - partNum
             var first = if (triple.second <= 2) triple.third + 1 else triple.third
             var end = uniqueSize - 1
-            if (first <= end && numList[end] >= needNum && numList[first] <= needNum) {
+            if (first > end)
+                continue
+            if (numList[end] > needNum && numList[first] < needNum) {
                 while (end - first > 1) {
                     val mid = (end + first) / 2
                     val c = numList[mid]
@@ -67,12 +69,14 @@ class ThreeSumClosest {
                     else
                         first = mid
                 }
-                val fDiff = Math.abs(numList[first] - needNum)
-                val eDiff = Math.abs(numList[end] - needNum)
-                when {fDiff <= eDiff && fDiff < sumPair.first -> sumPair = Pair(fDiff, partNum + numList[first])
-                    eDiff < sumPair.first -> sumPair = Pair(eDiff, partNum + numList[end])
-                }
             }
+            val fDiff = Math.abs(numList[first] - needNum)
+            val eDiff = Math.abs(numList[end] - needNum)
+            when {fDiff <= eDiff && fDiff < sumPair.first -> sumPair = Pair(fDiff, partNum + numList[first])
+                eDiff < sumPair.first -> sumPair = Pair(eDiff, partNum + numList[end])
+            }
+            if (sumPair.first == 0)
+                return sumPair.second
         }
         return sumPair.second
     }
