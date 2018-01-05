@@ -25,7 +25,7 @@ class FourSum {
         numNum.add(Pair(nums[size - 1], n))
 
         val uniqueSize = numNum.size
-        val partSumMap = mutableMapOf<Int, Triple<Int, Int, Int>>()
+        val partSumMap = mutableMapOf<Int, MutableList<Triple<Int, Int, Int>>>()
         for (i in 0 until uniqueSize) {
             val a = numNum[i]
             val aN = a.first
@@ -36,28 +36,34 @@ class FourSum {
                 val bN = b.first
                 val partSum = aN + bN
                 val bNum = b.second
-                partSumMap.put(partSum, Triple(i, bNum, j))
+                val tripleList = partSumMap.getOrPut(partSum, { mutableListOf() })
+                tripleList.add(Triple(i, bNum, j))
             }
         }
 
         val solutions = mutableListOf<List<Int>>()
-        val invalidPart = Triple(-1, -1, -1)
+        val invalidPart = emptyList<Triple<Int, Int, Int>>()
         for (part in partSumMap) {
             val partSum = part.key
             val thePart = part.value
             val needNum = target - partSum
             val otherPart = partSumMap.getOrDefault(needNum, invalidPart)
-            val matched = when {
-                thePart.third < otherPart.first -> true
-                thePart.third > otherPart.first -> false
-                thePart.second >= 4 -> true
-                thePart.second == 3 && (thePart.first != thePart.third || otherPart.first != otherPart.third) -> true
-                thePart.second == 2 && thePart.first != thePart.third && otherPart.first != otherPart.third -> true
-                else -> false
-            }
-            if (matched) {
-                val four = listOf(numNum[thePart.first].first, numNum[thePart.third].first, numNum[otherPart.first].first, numNum[otherPart.third].first)
-                solutions.add(four)
+
+            for (ab in thePart) {
+                for (cd in otherPart) {
+                    val matched = when {
+                        ab.third < cd.first -> true
+                        ab.third > cd.first -> false
+                        ab.second >= 4 -> true
+                        ab.second == 3 && (ab.first != ab.third || cd.first != cd.third) -> true
+                        ab.second == 2 && ab.first != ab.third && cd.first != cd.third -> true
+                        else -> false
+                    }
+                    if (matched) {
+                        val four = listOf(numNum[ab.first].first, numNum[ab.third].first, numNum[cd.first].first, numNum[cd.third].first)
+                        solutions.add(four)
+                    }
+                }
             }
         }
         return solutions
