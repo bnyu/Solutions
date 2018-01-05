@@ -81,7 +81,7 @@ class ThreeSumClosest {
         return sumPair.second
     }
 
-    private fun quickSort(nums: IntArray, first: Int, end: Int) {
+    fun quickSort(nums: IntArray, first: Int, end: Int) {
         var i = first
         var k = end
         val mid = nums[k]
