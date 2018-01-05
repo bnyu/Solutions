@@ -7,10 +7,9 @@ class ThreeSumClosest {
     fun threeSumClosest(nums: IntArray, target: Int): Int {
         val size = nums.size
         if (size < 3) return 0
-        val numList = nums.toMutableList()
-        quickSort(numList, 0, size - 1)
-        val smallest = numList[0] + numList[1] + numList[2]
-        val biggest = numList[size - 1] + numList[size - 2] + numList[size - 3]
+        quickSort(nums, 0, size - 1)
+        val smallest = nums[0] + nums[1] + nums[2]
+        val biggest = nums[size - 1] + nums[size - 2] + nums[size - 3]
 
         var sumPair = if (smallest >= target)
             return smallest
@@ -22,12 +21,11 @@ class ThreeSumClosest {
             if (sDiff <= bDiff) Pair(sDiff, smallest) else Pair(bDiff, biggest)
         }
 
-
         val numNum = mutableListOf<Pair<Int, Int>>()
-        var preNum = numList[0]
+        var preNum = nums[0]
         var n = 1
         for (i in 1 until size) {
-            val num = numList[i]
+            val num = nums[i]
             if (preNum != num) {
                 numNum.add(Pair(preNum, n))
                 preNum = num
@@ -35,7 +33,7 @@ class ThreeSumClosest {
             }
             ++n
         }
-        numNum.add(Pair(numList[size - 1], n))
+        numNum.add(Pair(nums[size - 1], n))
 
         val uniqueSize = numNum.size
         val partSumList = mutableListOf<Triple<Int, Boolean, Int>>()
@@ -47,7 +45,7 @@ class ThreeSumClosest {
                 val b = numNum[j].first
                 val bNum = numNum[j].second
                 val partSum = a + b
-                val canEqualB = bNum > 2 || bNum > 1 && i != j
+                val canEqualB = bNum > 2 || bNum == 2 && i != j
                 partSumList.add(Triple(partSum, canEqualB, j))
             }
         }
@@ -66,14 +64,15 @@ class ThreeSumClosest {
                     if (needNum == c)
                         return target
                     if (needNum > c)
-                        end = mid
-                    else
                         first = mid
+                    else
+                        end = mid
                 }
             }
             val fDiff = Math.abs(numNum[first].first - needNum)
             val eDiff = Math.abs(numNum[end].first - needNum)
-            when {fDiff <= eDiff && fDiff < sumPair.first -> sumPair = Pair(fDiff, partNum + numNum[first].first)
+            when {
+                fDiff <= eDiff && fDiff < sumPair.first -> sumPair = Pair(fDiff, partNum + numNum[first].first)
                 eDiff < sumPair.first -> sumPair = Pair(eDiff, partNum + numNum[end].first)
             }
             if (sumPair.first == 0)
@@ -82,7 +81,7 @@ class ThreeSumClosest {
         return sumPair.second
     }
 
-    private fun quickSort(nums: MutableList<Int>, first: Int, end: Int) {
+    private fun quickSort(nums: IntArray, first: Int, end: Int) {
         var i = first
         var k = end
         val mid = nums[k]

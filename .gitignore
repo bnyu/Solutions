@@ -2,5 +2,5 @@
 /.idea/
 /out/
 /kotlin/test/
-/scala/test
-
+/scala/test/
+target/
