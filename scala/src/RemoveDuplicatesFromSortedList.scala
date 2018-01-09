@@ -6,8 +6,8 @@ object RemoveDuplicatesFromSortedList {
   def deleteDuplicates(head: ListNode): ListNode = {
     if (head == null)
       return null
-    val preAns = new ListNode()
-    var nonDupNode = preAns
+    val ans = head
+    var nonDupNode = ans
     var preNode = head
     var node = head.next
     while (node != null) {
@@ -18,8 +18,12 @@ object RemoveDuplicatesFromSortedList {
       }
       node = node.next
     }
-    if (nonDupNode.x != preNode.x)
+    if (nonDupNode.x != preNode.x) {
+      preNode.next = null
       nonDupNode.next = preNode
-    preAns.next
+    }
+    else
+      nonDupNode.next = null
+    ans
   }
 }
