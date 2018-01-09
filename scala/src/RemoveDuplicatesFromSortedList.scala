@@ -18,7 +18,8 @@ object RemoveDuplicatesFromSortedList {
       }
       node = node.next
     }
-    nonDupNode.next = preNode
+    if (nonDupNode.x != preNode.x)
+      nonDupNode.next = preNode
     preAns.next
   }
 }
