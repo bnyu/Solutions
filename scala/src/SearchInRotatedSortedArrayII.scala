@@ -9,13 +9,15 @@ object SearchInRotatedSortedArrayII {
   def search(nums: Array[Int], target: Int): Boolean = {
     var i = 0
     var j = nums.length - 1
-    if (j < i)
+    if (j < 0)
       return false
+    else if (j == 0)
+      return nums(0) == target
     val head = nums(i)
     if (head == target)
       return true
 
-    j = if (nums(i) < nums(j)) i else if (nums(i) > nums(j)) j else {
+    if (nums(i) == nums(j)) {
       // eg: 4,4,4,4,4,7,4,4,4
       def search(s: mutable.MutableList[(Int, Int)]): Int = {
         val nextS = mutable.MutableList[(Int, Int)]()
@@ -32,27 +34,34 @@ object SearchInRotatedSortedArrayII {
       }
 
       val s = mutable.MutableList((i + 1, j - 1))
-      search(s)
+      j = search(s)
     }
-    //todo
-
+    //在i,j之间找到拐点
     if (nums(j) > head) {
-      val temp = j
-      j = i
-      i = temp
+      i = j
+      j = nums.length - 1
     }
-
-    //todo
-
+    //之后就和 Search in Rotated Sorted Array 一样了
     val tail = nums(j)
     while (j - i > 1) {
       val mid = (i + j) / 2
-      if (nums(mid) >= tail) i = mid else j = mid
+      if (nums(mid) > tail) i = mid else j = mid
     }
-    val rotate = if (nums(j) >= tail) j else i
+    val rotate = if (nums(j) > tail) j else i
 
-    //todo
-    ???
+    if (target >= head && target <= nums(rotate)) {
+      i = 0
+      j = rotate
+    } else if (rotate < nums.length - 1 && target >= nums(rotate + 1)) {
+      i = rotate + 1
+      j = nums.length - 1
+    } else
+      return false
+    while (j - i > 1) {
+      val mid = (i + j) / 2
+      if (target >= nums(mid)) i = mid else j = mid
+    }
+    nums(i) == target || nums(j) == target
   }
 }
 
