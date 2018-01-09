@@ -5,63 +5,50 @@
  */
 class ThreeSum {
     fun threeSum(nums: IntArray): List<List<Int>> {
-        //数字个数
-        val numNum = mutableMapOf<Int, Int>()
-        val ans = mutableListOf<List<Int>>()
-        var zeroTime = 0
-        //记录是单个还是多个 除0需3个才满足
-        for (n in nums) {
-            if (numNum.containsKey(n))
-                numNum.put(n, 2)
-            else
-                numNum.put(n, 1)
-            if (n == 0)
-                zeroTime++
-        }
-        if (nums.size < 3)
-            return ans
-        val matched = mutableMapOf<Int, MutableSet<Int>>()
-        for (a in numNum.keys) {
-            //每两个数之前的组合
-            for (b in numNum.keys) {
-                val bNum = numNum[b]
-                //b作为a已经匹配过了
-                if (bNum == 0)
-                    continue
-                //自身匹配 但只有单个
-                if (a == b && bNum == 1)
-                    continue
-                val c = 0 - a - b
-                //没有可以匹配成功的
-                val cNum = numNum.getOrDefault(c, 0)
-                if (cNum == 0)
-                    continue
-                //需要匹配的数为a/b 但只有单个
-                if ((a == c || b == c) && cNum == 1)
-                    continue
-                //排除相同 用最大与最小区分
-                val min = Math.min(a, Math.min(b, c))
-                val max = Math.max(a, Math.max(b, c))
-                if (min == max)
-                    if (zeroTime < 3)
-                        continue
-                if (matched.containsKey(min)) {
-                    val maxes = matched[min]!!
-                    if (maxes.contains(max))
-                        continue
-                    else
-                        maxes.add(max)
-                } else {
-                    val maxes = mutableSetOf<Int>()
-                    maxes.add(max)
-                    matched.put(min, maxes)
-                }
-                val list = listOf(a, b, c)
-                ans.add(list)
+        val target = 0
+        val sort = ThreeSumClosest()
+        val size = nums.size
+        if (size < 3) return emptyList()
+        sort.quickSort(nums, 0, size - 1)
+        val smallest = nums[0] + nums[1] + nums[2]
+        val biggest = nums[size - 1] + nums[size - 2] + nums[size - 3]
+        if (smallest > target || biggest < target) return emptyList()
+
+        val numNum = mutableListOf<Pair<Int, Int>>()
+        var preNum = nums[0]
+        var n = 1
+        for (i in 1 until size) {
+            val num = nums[i]
+            if (preNum != num) {
+                numNum.add(Pair(preNum, n))
+                preNum = num
+                n = 0
             }
-            numNum.put(a, 0)
+            ++n
         }
-        return ans
+        numNum.add(Pair(nums[size - 1], n))
+        val numNumMap = numNum.toMap()
+        val solutions = mutableListOf<List<Int>>()
+
+        val uniqueSize = numNum.size
+        for (i in 0 until uniqueSize) {
+            val a = numNum[i].first
+            val aNum = numNum[i].second
+            val canEqualA = aNum > 1
+            val index = if (canEqualA) i else i + 1
+            for (j in index until uniqueSize) {
+                val b = numNum[j].first
+                val bNum = numNum[j].second
+                val canEqualB = bNum > 2 || bNum == 2 && i != j
+                val c = target - a - b
+                //即 k>j || k==j && canEqualB
+                if (c > b || c == b && canEqualB) {
+                    if (numNumMap.containsKey(c))
+                        solutions.add(listOf(a, b, c))
+                }
+            }
+        }
+        return solutions
     }
 }
 
