@@ -5,14 +5,13 @@
  */
 class ThreeSum {
     fun threeSum(nums: IntArray): List<List<Int>> {
-        val target = 0
         val sort = ThreeSumClosest()
         val size = nums.size
         if (size < 3) return emptyList()
         sort.quickSort(nums, 0, size - 1)
         val smallest = nums[0] + nums[1] + nums[2]
         val biggest = nums[size - 1] + nums[size - 2] + nums[size - 3]
-        if (smallest > target || biggest < target) return emptyList()
+        if (smallest > 0 || biggest < 0) return emptyList()
 
         val numNum = mutableListOf<Pair<Int, Int>>()
         var preNum = nums[0]
@@ -28,26 +27,21 @@ class ThreeSum {
         }
         numNum.add(Pair(nums[size - 1], n))
         val numNumMap = numNum.toMap()
-        val solutions = mutableListOf<List<Int>>()
 
+        val solutions = mutableListOf<List<Int>>()
         val uniqueSize = numNum.size
-        for (i in 0 until uniqueSize) {
+        for (i in 0 until uniqueSize - 2) {
             val a = numNum[i].first
-            val aNum = numNum[i].second
-            val canEqualA = aNum > 1
-            val index = if (canEqualA) i else i + 1
-            for (j in index until uniqueSize) {
+            for (j in i + 1 until uniqueSize - 1) {
                 val b = numNum[j].first
                 val bNum = numNum[j].second
-                val canEqualB = bNum > 2 || bNum == 2 && i != j
-                val c = target - a - b
-                //即 k>j || k==j && canEqualB
-                if (c > b || c == b && canEqualB) {
-                    if (numNumMap.containsKey(c))
-                        solutions.add(listOf(a, b, c))
-                }
+                val c = 0 - a - b
+                if (c > b && numNumMap.contains(c) || c == b && bNum >= 2)
+                    solutions.add(listOf(a, b, c))
             }
         }
+        if (numNumMap.getOrDefault(0, 0) >= 3)
+            solutions.add(listOf(0, 0, 0))
         return solutions
     }
 }
