@@ -6,6 +6,7 @@ object MergeSortedArray {
   def merge(nums1: Array[Int], m: Int, nums2: Array[Int], n: Int): Unit = {
     var i = 0
     var i2 = 0
+    var i1 = m
 
     def insert(num: Int): Unit = {
       for (k <- (i until i2 + m).reverse)
@@ -16,18 +17,25 @@ object MergeSortedArray {
       i += num
     }
 
-    while (i < m + n) {
-      val num = nums1(i)
-      var insertNum = 0
-      var break = false
-      for (j <- i2 until n if !break) {
-        if (nums2(j) < num)
-          insertNum += 1
-        else break = true
+    while (i2 < n) {
+      if (i1 > 0) {
+        val num = nums1(i)
+        var insertNum = 0
+        var break = false
+        for (j <- i2 until n if !break) {
+          if (nums2(j) < num)
+            insertNum += 1
+          else break = true
+        }
+        if (insertNum > 0)
+          insert(insertNum)
+        i += 1
+        i1 -= 1
+      } else {
+        for (k <- 0 until n - i2)
+          nums1(i + k) = nums2(i2 + k)
+        i2 = n
       }
-      if (insertNum > 0)
-        insert(insertNum)
-      i += 1
     }
   }
 }
