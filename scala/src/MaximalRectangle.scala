@@ -26,11 +26,11 @@ object MaximalRectangle {
         } else {
           var nonDup = true
           for (p <- rows(r - 1)) {
-            if (p._1 == left && p._2 == right) {
-              updateRows(r, (p._1, p._2, p._3 + 1))
-              nonDup = false
-            } else if (p._1 <= right && p._2 >= left) {
-              if (p._1 >= left && p._2 <= right) updateRows(r, (p._1, p._2, p._3 + 1))
+            if (p._1 <= right && p._2 >= left) {
+              if (p._1 == left && p._2 == right) {
+                updateRows(r, (p._1, p._2, p._3 + 1))
+                nonDup = false
+              } else if (p._1 >= left && p._2 <= right) updateRows(r, (p._1, p._2, p._3 + 1))
               else if (p._1 >= left && p._1 <= right) updateRows(r, (p._1, right, p._3 + 1))
               else if (p._2 >= left && p._2 <= right) updateRows(r, (left, p._2, p._3 + 1))
               else if (p._1 <= left && p._2 >= right) updateRows(r, (left, right, p._3 + 1))
