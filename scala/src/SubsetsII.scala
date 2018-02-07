@@ -31,7 +31,7 @@ object SubsetsII {
           var subset = list
           nextNum = nextNum.tail
           // 只有这和Subsets.scala不同
-          for (i <- 1 to nNum) {
+          for (_ <- 1 to nNum) {
             subset = n :: subset
             ans += subset
             addSubset(subset, nextNum)
