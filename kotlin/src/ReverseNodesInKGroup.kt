@@ -23,11 +23,10 @@ class ReverseNodesInKGroup {
             return head
         for (i in 0 until hSize) {
             val previous = heads[i]
-            val after: ListNode
-            if (i + 1 < tSize)
-                after = tails[i + 1]
+            val after = if (i + 1 < tSize)
+                tails[i + 1]
             else if (i + 1 < hSize)
-                after = heads[i + 1]
+                heads[i + 1]
             else
                 break
             previous.next = after
@@ -35,24 +34,19 @@ class ReverseNodesInKGroup {
         return if (tSize > 0) tails[0] else head
     }
 
-    private fun reverse(previous: ListNode, k: Int, i: Int): ListNode {
-        var index = i
+    private fun reverse(previous: ListNode, k: Int, i: Int) {
         length++
-        if (index == k) {
-            val next = previous.next
-            if (next != null) {
+        val next = previous.next
+        if (next != null) {
+            if (i == k) {
                 tails.add(previous)
                 heads.add(next)
                 reverse(next, k, 1)
+            } else {
+                reverse(next, k, i + 1)
+                next.next = previous
             }
-            return previous
         }
-        val next = previous.next
-        if (next != null) {
-            val after = reverse(next, k, ++index)
-            after.next = previous
-        }
-        return previous
     }
 
 }
