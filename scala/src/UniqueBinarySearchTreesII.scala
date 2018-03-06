@@ -10,78 +10,52 @@ object UniqueBinarySearchTreesII {
     var oldRoots = mutable.MutableList[TreeNode]()
 
     def generate(root: TreeNode, value: Int): Unit = {
-
-      var preNode: TreeNode = null
       var node = root
       while (node != null) {
-        if (value > node.value) {
-          if (node.right == null || value < node.right.value) {
+        if (node.right == null) {
+          var loop = true
+          var theNode = node
+          while (loop) {
             val copiedRoot = copy(root)
-            val copiedNode = search(copiedRoot, node.value)
+            val route = search(copiedRoot, theNode.value, Nil)
+            val copiedNode = route.head
 
-            val tempRight0 = copiedNode.right
-            val newRight0 = new TreeNode(value)
-            if (preNode != null) {
-              preNode.right = newRight0
+            val newBiggest = new TreeNode(value)
+            val preNode = route.tail
+            if (preNode.nonEmpty) {
+              preNode.head.right = newBiggest
               roots += copiedRoot
+              theNode = preNode.head
             } else {
-              roots += newRight0
+              roots += newBiggest
+              loop = false
             }
-            newRight0.left = copiedNode
-            newRight0.right = tempRight0
-            copiedNode.right = null
-
-            val tempRight = node.right
-            val newRight = new TreeNode(value)
-            node.right = newRight
-            newRight.right = tempRight
-
-            node = null
-          } else {
-            preNode = node
-            node = node.right
+            newBiggest.left = copiedNode
           }
+
+          val biggest = new TreeNode(value)
+          node.right = biggest
+          roots += root
+          node = null
         } else {
-          if (node.left == null || value > node.left.value) {
-            val copiedRoot = copy(root)
-            val copiedNode = search(copiedRoot, node.value)
-
-            val tempLeft0 = copiedNode.left
-            val newLeft0 = new TreeNode(value)
-            if (preNode != null) {
-              preNode.left = newLeft0
-              roots += copiedRoot
-            } else {
-              roots += newLeft0
-            }
-            newLeft0.right = copiedNode
-            newLeft0.left = tempLeft0
-            copiedNode.left = null
-
-            val tempLeft = node.left
-            val newLeft = new TreeNode(value)
-            node.left = newLeft
-            newLeft.left = tempLeft
-
-            node = null
-          } else {
-            preNode = node
-            node = node.left
-          }
+          node = node.right
         }
       }
     }
 
-
-    oldRoots += new TreeNode(1)
-    for (i <- 2 to n) {
-      for (root <- oldRoots) {
-        generate(root, i)
+    if (n > 0) {
+      oldRoots += new TreeNode(1)
+      for (i <- 2 to n) {
+        for (root <- oldRoots) {
+          generate(root, i)
+        }
+        val temp = oldRoots
+        oldRoots = roots
+        roots = temp
+        temp.clear()
       }
-      oldRoots = oldRoots ++ roots
-      roots = new mutable.MutableList[TreeNode]
-    }
-    oldRoots.toList
+      oldRoots.toList
+    } else Nil
   }
 
   private def copy(root: TreeNode): TreeNode = {
@@ -93,13 +67,13 @@ object UniqueBinarySearchTreesII {
     copied
   }
 
-  private def search(root: TreeNode, value: Int): TreeNode = {
-    if (root == null || root.value == value)
-      root
+  private def search(root: TreeNode, value: Int, route: List[TreeNode]): List[TreeNode] = {
+    if (root.value == value)
+      root :: route
     else if (root.value < value)
-      search(root.right, value)
+      search(root.right, value, root :: route)
     else
-      search(root.left, value)
+      search(root.left, value, root :: route)
   }
 
 }
