@@ -22,7 +22,6 @@ object UniqueBinarySearchTrees {
       }
       val pre = depthNum.fold((0, 0))((sum, x) => (x._1 * x._2 + sum._1, x._2 + sum._2))
       pre._1 + pre._2
-    }
-    else n
+    } else n
   }
 }
