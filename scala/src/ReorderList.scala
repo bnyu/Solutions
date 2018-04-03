@@ -1,3 +1,5 @@
+import scala.collection.mutable
+
 /** 143. Reorder List
   * Given a singly linked list L: L0→L1→…→Ln-1→Ln,
   * reorder it to: L0→Ln→L1→Ln-1→L2→Ln-2→…
@@ -6,11 +8,11 @@
   */
 object ReorderList {
   def reorderList(head: ListNode): Unit = {
-    var nodes: List[ListNode] = Nil
+    val nodes = new mutable.MutableList[ListNode]
     var node = head
     while (node != null) {
       val pre = node
-      nodes = nodes ::: pre :: Nil
+      nodes += pre
       node = pre.next
       pre.next = null
     }
