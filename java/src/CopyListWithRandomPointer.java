@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 /**
  * 138. Copy List with Random Pointer
@@ -7,8 +6,7 @@ import java.util.List;
  * Return a deep copy of the list.
  */
 public class CopyListWithRandomPointer {
-    private List<RandomListNode> nodeList = new ArrayList<>();
-    private List<RandomListNode> copiedList = new ArrayList<>();
+    private HashMap<RandomListNode, RandomListNode> copiedPair = new HashMap<>();
 
     public RandomListNode copyRandomList(RandomListNode head) {
         RandomListNode temp = new RandomListNode(0);
@@ -20,26 +18,18 @@ public class CopyListWithRandomPointer {
     private void copy(RandomListNode head, RandomListNode copied) {
         if (head != null) {
             copied.next = new RandomListNode(head.label);
-            nodeList.add(head);
-            copiedList.add(copied.next);
+            copiedPair.put(head, copied.next);
             copy(head.next, copied.next);
         }
     }
 
     private void addPointer() {
-        for (int j = 0; j < nodeList.size(); j++) {
-            RandomListNode node = nodeList.get(j);
+        for (HashMap.Entry<RandomListNode, RandomListNode> entry : copiedPair.entrySet()) {
+            RandomListNode node = entry.getKey();
+            RandomListNode copied = entry.getValue();
             RandomListNode random = node.random;
             if (random != null) {
-                RandomListNode copied = copiedList.get(j);
-                int index = -1;
-                for (int i = 0; i < nodeList.size(); i++) {
-                    if (random == nodeList.get(i)) {
-                        index = i;
-                        break;
-                    }
-                }
-                copied.random = copiedList.get(index);
+                copied.random = copiedPair.get(random);
             }
         }
     }
