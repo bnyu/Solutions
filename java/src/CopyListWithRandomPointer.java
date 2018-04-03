@@ -15,11 +15,12 @@ public class CopyListWithRandomPointer {
         return temp.next;
     }
 
-    private void copy(RandomListNode head, RandomListNode copied) {
-        if (head != null) {
-            copied.next = new RandomListNode(head.label);
-            copiedPair.put(head, copied.next);
-            copy(head.next, copied.next);
+    private void copy(RandomListNode node, RandomListNode copied) {
+        while (node != null) {
+            copied.next = new RandomListNode(node.label);
+            copiedPair.put(node, copied.next);
+            node = node.next;
+            copied = copied.next;
         }
     }
 
