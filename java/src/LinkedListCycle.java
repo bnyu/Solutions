@@ -7,13 +7,15 @@ import java.util.HashSet;
  */
 public class LinkedListCycle {
     public boolean hasCycle(ListNode head) {
-        HashSet<ListNode> listNodes = new HashSet<>();
+        //so it allowed modify
+        ListNode marked = new ListNode(0);
         while (head != null) {
-            if (listNodes.contains(head)) {
+            if (head.next == marked) {
                 return true;
             }
-            listNodes.add(head);
+            ListNode pre = head;
             head = head.next;
+            pre.next = marked;
         }
         return false;
     }
