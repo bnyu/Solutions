@@ -33,10 +33,8 @@ object BinaryTreePostorderTraversal {
       while (back && stack.nonEmpty) {
         loop = false
         val child = stack.last
-        val father = stack.get(stack.length - 2).orNull
-        //不是才遍历过的节点 不是才记录的节点的父节点 是之前放入的右节点(即刚记录完父节点的左节点,再遍历它右节点)
-        if (child != preNode && child.left != record && child.right != record && father != null && father.right == child
-          && (child.left != null || child.right != null)) { //有子节点(先判断 不用在这弹出之后再入栈 否则死循环) 然后再对其遍历
+        //不是才遍历过的节点 是之前放入的右节点(即刚记录完父节点的左节点,再遍历它右节点) 有子节点 然后再对其遍历
+        if (child != preNode && child.left != record && child.right != record && (child.left != null || child.right != null)) {
           node = child
           preNode = node
           back = false
