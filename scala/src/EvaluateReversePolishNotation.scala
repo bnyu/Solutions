@@ -16,21 +16,21 @@ object EvaluateReversePolishNotation {
     var result: Option[Int] = None
     for (t <- tokens.reverse if result.isEmpty) {
       t match {
-        case "+" => operations += ((plus, None))
-        case "-" => operations += ((minus, None))
-        case "*" => operations += ((multi, None))
-        case "/" => operations += ((divide, None))
+        case "+" => (plus, None) +=: operations
+        case "-" => (minus, None) +=: operations
+        case "*" => (multi, None) +=: operations
+        case "/" => (divide, None) +=: operations
         case num =>
           var n = num.toInt
           var loop = true
           while (loop && operations.nonEmpty) {
-            val (op, b) = operations.last
+            val (op, b) = operations.head
             if (b.isEmpty) {
-              operations(operations.length - 1) = (op, Some(n))
+              operations(0) = (op, Some(n))
               loop = false
             } else {
               n = op(n, b.get) //n = a op b; n作为下一个op的b或a(若已存在b)
-              operations = operations.dropRight(1)
+              operations = operations.tail
             }
           }
           if (operations.isEmpty)
