@@ -4,34 +4,24 @@
   */
 object MajorityElement {
   def majorityElement(nums: Array[Int]): Int = {
-    quickSort(nums)
+    insertSort(nums)
     nums(nums.length / 2)
   }
 
-  def quickSort[T <% Ordered[T]](a: Array[T]): Unit = {
+  def insertSort[T <% Ordered[T]](a: Array[T]): Unit = {
     if (a.length > 1) {
-      def sort(start: Int, end: Int): Unit = {
-        var i = start
-        var k = end
-        val mid = a(k)
-        while (i < k) {
-          while (i < k && mid >= a(i))
-            i += 1
-          if (i < k)
-            a(k) = a(i)
-          while (i < k && mid <= a(k))
-            k -= 1
-          if (i < k)
-            a(i) = a(k)
-          a(k) = mid
+      for (i <- 1 until a.length) {
+        val toInsert = a(i)
+        var k = i - 1
+        while (k >= 0 && toInsert < a(k))
+          k -= 1
+        k += 1
+        if (k < i) {
+          for (m <- (k + 1 to i).reverse)
+            a(m) = a(m - 1)
+          a(k) = toInsert
         }
-        if (k - 1 > start)
-          sort(start, k - 1)
-        if (k + 1 < end)
-          sort(k + 1, end)
       }
-
-      sort(0, a.length - 1)
     }
   }
 }
