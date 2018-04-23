@@ -8,7 +8,7 @@ object MajorityElement {
     nums(nums.length / 2)
   }
 
-  def insertSort[T <% Ordered[T]](a: Array[T]): Unit = {
+  def insertSort(a: Array[Int]): Unit = {
     if (a.length > 1) {
       for (i <- 1 until a.length) {
         val toInsert = a(i)
@@ -17,8 +17,8 @@ object MajorityElement {
           k -= 1
         k += 1
         if (k < i) {
-          for (m <- (k + 1 to i).reverse)
-            a(m) = a(m - 1)
+          for (m <- (k until i).reverse)
+            a(m + 1) = a(m)
           a(k) = toInsert
         }
       }
