@@ -17,7 +17,7 @@ import scala.collection.mutable
 object DungeonGame {
   def calculateMinimumHP(dungeon: Array[Array[Int]]): Int = {
     val row = dungeon.length - 1
-    val column = if (row > 0) dungeon.head.length - 1 else -1
+    val column = if (row >= 0) dungeon.head.length - 1 else -1
     if (row >= 0 && column >= 0) {
       val cache = new mutable.HashMap[(Int, Int), Int]()
 
