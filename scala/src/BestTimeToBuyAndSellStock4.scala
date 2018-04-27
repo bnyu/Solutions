@@ -10,7 +10,7 @@ object BestTimeToBuyAndSellStock4 {
     //similar to 3
     val maxTime = if (k > prices.length / 2) prices.length / 2 else k
     var maxProfit = 0
-    val timeAndProfit = new mutable.HashMap[Int, Int]() //cache
+    val indexAndProfit = new mutable.HashMap[Int, (Int, Int)]() //cache
 
     def buyThenSell(index: Int, time: Int, profit: Int): Unit = {
       if (time < maxTime && index < prices.length) {
@@ -24,12 +24,18 @@ object BestTimeToBuyAndSellStock4 {
             if (temp > get) {
               get = temp
               val got = profit + get
-              val oldGot = timeAndProfit.getOrElse(time, 0)
-              if (got > oldGot) {
+              val oldGot = indexAndProfit.get(time)
+              if (oldGot.isEmpty || i < oldGot.get._1 || got > oldGot.get._2) {
                 if (got > maxProfit)
                   maxProfit = got
                 buyThenSell(i + 1, time + 1, got)
-                timeAndProfit.update(time, got)
+                if (oldGot.isDefined) {
+                  val theI = if (oldGot.get._1 < i) i else oldGot.get._1
+                  val theGot = if (oldGot.get._2 > got) got else oldGot.get._2
+                  indexAndProfit.update(time, (theI, theGot))
+                } else {
+                  indexAndProfit.update(time, (i, got))
+                }
               }
             }
           }
