@@ -1,3 +1,5 @@
+import scala.collection.mutable
+
 /** 188. Best Time to Buy and Sell Stock IV
   * Say you have an array for which the ith element is the price of a given stock on day i.
   * Design an algorithm to find the maximum profit. You may complete at most k transactions.
@@ -8,6 +10,7 @@ object BestTimeToBuyAndSellStock4 {
     //similar to 3
     val maxTime = if (k > prices.length / 2) prices.length / 2 else k
     var maxProfit = 0
+    val timeAndProfit = new mutable.HashMap[Int, Int]() //cache
 
     def buyThenSell(index: Int, time: Int, profit: Int): Unit = {
       if (time < maxTime && index < prices.length) {
@@ -16,12 +19,19 @@ object BestTimeToBuyAndSellStock4 {
         for (i <- index + 1 until prices.length) {
           if (prices(i) < buy) {
             buy = prices(i)
-          } else if (prices(i) - buy > get) {
-            get = prices(i) - buy
-            val got = profit + get
-            if (got > maxProfit)
-              maxProfit = got
-            buyThenSell(i + 1, time + 1, got)
+          } else {
+            val temp = prices(i) - buy
+            if (temp > get) {
+              get = temp
+              val got = profit + get
+              val oldGot = timeAndProfit.getOrElse(time, 0)
+              if (got > oldGot) {
+                if (got > maxProfit)
+                  maxProfit = got
+                buyThenSell(i + 1, time + 1, got)
+                timeAndProfit.update(time, got)
+              }
+            }
           }
         }
       }
