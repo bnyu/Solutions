@@ -23,7 +23,7 @@ public class ReverseBits {
         int r = 0;
         for (int i = 0; i < bit.length; ++i) {
             if ((n & bit[i]) == bit[i]) {
-                r += bit[bit.length - 1 - i];
+                r = r | bit[bit.length - 1 - i];
             }
         }
         return r;
