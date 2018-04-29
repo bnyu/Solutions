@@ -1,5 +1,3 @@
-import scala.collection.mutable
-
 /** 204. Count Primes
   * Count the number of prime numbers less than a non-negative number, n.
   * Example: Input: 10  Output: 4
@@ -7,23 +5,15 @@ import scala.collection.mutable
   */
 object CountPrimes {
   def countPrimes(n: Int): Int = {
-    val x = n - 1
-    if (x > 2) {
-      val odds = new mutable.MutableList[Int]
-      odds += 2
-      for (i <- 3 to x by 2) {
-        var isOdd = true
-        for (odd <- odds if isOdd && odd <= i / odd) {
-          if (i % odd == 0)
-            isOdd = false
-        }
-        if (isOdd) {
-          odds += i
+    if (n <= 1) return 0
+    val nonPrime = new Array[Boolean](n) //不包括n
+    for (x <- 2 until n if x * x <= n) { //开根 乘法比除法高效 但若n很大x*x可能会溢出 所以必须是until
+      if (!nonPrime(x)) { //已经是合数
+        for (i <- x + x until n by x) { //排除自身
+          nonPrime(i) = true //将其倍数设为合数
         }
       }
-      odds.length
-    } else if (x == 2) {
-      1
-    } else 0
+    }
+    nonPrime.count({ b => !b }) - 2 //减去0和1
   }
 }
