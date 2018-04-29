@@ -13,18 +13,20 @@ import scala.collection.mutable
 object BinaryTreeRightSideView {
   def rightSideView(root: TreeNode): List[Int] = {
     val right = new mutable.MutableList[Int]
-
-    def travel(root: TreeNode, depth: Int): Unit = {
-      if (depth == right.length)
-        right += root.value
-      if (root.right != null)
-        travel(root.right, depth + 1)
-      if (root.left != null)
-        travel(root.left, depth + 1)
-    }
-
+    val stack = new mutable.ArrayStack[(TreeNode, Int)]
     if (root != null)
-      travel(root, 0)
+      stack.push(root, 0)
+    while (stack.nonEmpty) {
+      var (node, depth) = stack.pop()
+      do {
+        if (depth == right.length)
+          right += node.value
+        depth += 1
+        if (node.left != null)
+          stack.push(node.left, depth)
+        node = node.right
+      } while (node != null)
+    }
     right.toList
   }
 }
