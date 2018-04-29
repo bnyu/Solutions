@@ -10,28 +10,34 @@ object BitwiseANDofNumbersRange {
     else if (m == n) {
       m
     } else {
-      def highestBits(n: Int): Int = {
-        var x = n
-        var i = 0
-        while (x != 0) {
-          x = x >> 1
-          i += 1
-        }
-        x = 1 << (i - 1)
-        while (i > 1) {
-          i -= 1
-          val y = x | (x >> 1)
-          if ((y & n) == y)
-            x = y
-          else
-            i = 0
-        }
-        x
+      var x = n
+      var i = 0
+      while (x != 0) {
+        x = x >> 1
+        i += 1
       }
-
-      val x1 = highestBits(n)
-      val x2 = highestBits(m)
-      x1 & x2
+      val xBits = i
+      i = 0
+      var y = m
+      while (y != 0) {
+        y = y >> 1
+        i += 1
+      }
+      val yBits = i
+      if (xBits == yBits) {
+        x = 1 << (i - 1)
+        var highestBits = 0
+        var loop = true
+        while (loop) {
+          if ((x & m) == (x & n)) {
+            x = x | (x >> 1)
+          } else {
+            highestBits = x
+            loop = false
+          }
+        }
+        m & highestBits
+      } else 0
     }
   }
 }
