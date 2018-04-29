@@ -8,39 +8,22 @@ import scala.collection.mutable
 object CountPrimes {
   def countPrimes(n: Int): Int = {
     val x = n - 1
-    //静态字段会有多线程问题
-    val littleOdds = new mutable.MutableList[Int]
-    littleOdds += 2
-    for (i <- 3 to 17 by 2) {
-      var isOdd = true
-      for (odd <- littleOdds if isOdd && odd <= i / 2) {
-        if (i % odd == 0)
-          isOdd = false
-      }
-      if (isOdd)
-        littleOdds += i
-    }
-
-
-    if (x >= 17) {
-      val bigOdds = new mutable.MutableList[Int]
-      for (i <- 19 to x by 2) {
+    if (x > 2) {
+      val odds = new mutable.MutableList[Int]
+      odds += 2
+      for (i <- 3 to x by 2) {
         var isOdd = true
-        for (odd <- littleOdds if isOdd) {
-          if (i % odd == 0)
-            isOdd = false
-        }
-        for (odd <- bigOdds if isOdd && odd <= i / 17) {
+        for (odd <- odds if isOdd && odd <= i / odd) {
           if (i % odd == 0)
             isOdd = false
         }
         if (isOdd) {
-          bigOdds += i
+          odds += i
         }
       }
-      littleOdds.length + bigOdds.length
-    } else  {
-      littleOdds.indexWhere(_ > x)
-    }
+      odds.length
+    } else if (x == 2) {
+      1
+    } else 0
   }
 }
