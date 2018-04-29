@@ -16,15 +16,14 @@ object BitwiseANDofNumbersRange {
         x = x >> 1
         i += 1
       }
-      val xBits = i
+      val bit = i
       i = 0
-      var y = m
-      while (y != 0) {
-        y = y >> 1
+      x = m
+      while (x != 0) {
+        x = x >> 1
         i += 1
       }
-      val yBits = i
-      if (xBits == yBits) {
+      if (bit == i) {
         x = 1 << (i - 1)
         var highestBits = 0
         var loop = true
