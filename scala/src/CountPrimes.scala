@@ -13,8 +13,9 @@ object CountPrimes {
   private var maxN = 4
 
   def countPrimes(n: Int): Int = {
-    if (n > maxN) {
-      for (i <- maxN + 1 to n by 2) {
+    val x = n - 1
+    if (x > maxN) {
+      for (i <- maxN + 1 to x by 2) {
         var isOdd = true
         for (odd <- odds if isOdd && odd <= i / 3) {
           if (i % odd == 0)
@@ -25,15 +26,15 @@ object CountPrimes {
           maxOdd = i
         }
       }
-      if ((n | 1) == 1)
-        maxN = n + 1
+      if ((x | 1) == 1)
+        maxN = x + 1
       else
-        maxN = n
+        maxN = x
       odds.length
-    } else if (n >= maxOdd) {
+    } else if (x >= maxOdd) {
       odds.length
     } else {
-      odds.indexWhere(_ >= n)
+      odds.indexWhere(_ > x)
     }
   }
 }
