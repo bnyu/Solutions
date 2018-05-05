@@ -7,10 +7,11 @@
 object RotateArray {
   def rotate(nums: Array[Int], k: Int): Unit = {
     //O(1) memory
-    if (nums.length > 0 && k > 0 && k < nums.length) {
+    if (nums.length > 0 && k > 0) {
+      val x = k % nums.length
       var n = 0
-      while (n < k) {
-        val index = nums.length - k + n
+      while (n < x) {
+        val index = nums.length - x + n
         val temp = nums(index)
         for (i <- index until n by -1)
           nums(i) = nums(i - 1)
