@@ -26,12 +26,12 @@ object HouseRobberII {
       }
     }
 
-    if (nums.length > 2) {
+    if (nums.length > 1) {
       val m1 = rob(0, nums.length - 2)
       cache.clear()
       val m2 = rob(1, nums.length - 1)
       if (m1 > m2) m1 else m2
-    } else if (nums.length == 1) {
+    } else if (nums.nonEmpty) {
       nums(0)
     } else 0
   }
