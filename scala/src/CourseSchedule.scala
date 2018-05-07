@@ -1,4 +1,4 @@
-import scala.collection.mutable.{MutableList => MList}
+import scala.collection.{immutable, mutable}
 
 /** 207. Course Schedule
   * There are a total of n courses you have to take, labeled from 0 to n-1.
@@ -21,38 +21,36 @@ object CourseSchedule {
   }
 
   def canFinish(numCourses: Int, prerequisites: Array[Array[Int]]): Boolean = {
-    val courses = new Array[(Course, MList[Course], MList[Course])](numCourses) //course, pre, next
+    val courses = new Array[(Course, mutable.HashSet[Course])](numCourses) //course, pre(or next, it's same)
     for (i <- 0 until numCourses)
-      courses(i) = (new Course(i), new MList[Course], new MList[Course])
-    for (edge <- prerequisites) {
-      courses(edge(0))._2 += courses(edge(1))._1
-      courses(edge(1))._3 += courses(edge(0))._1
+      courses(i) = (new Course(i), new mutable.HashSet[Course])
+    //build adjacency list
+    for (edge <- prerequisites)
+      courses(edge(1))._2 += courses(edge(0))._1
+
+    var canLearn = true //no cycle
+
+
+    def learn(i: Int, way: immutable.HashSet[Int]): Boolean = {
+      val (course, pre) = courses(i)
+      //only all required courses are learned, this course can be learned
+      if (canLearn && !course.learned) {
+        if (!way.contains(i)) {
+          val nextWay = way + i
+          for (p <- pre if canLearn && !p.learned)
+            canLearn = learn(p.i, nextWay)
+          if (canLearn)
+            course.learned = true
+        } else {
+          canLearn = false //cycle
+        }
+      }
+      course.learned
     }
 
-    //DFS?
-    def learn(i: Int): Unit = {
-      val pre = courses(i)._2
-      var canLearn = true
-      for (p <- pre if canLearn) {
-        if (!p.learned)
-          canLearn = false
-      }
-      if (canLearn) {
-        courses(i)._1.learned = true
-        for (next <- courses(i)._3 if !next.learned)
-          learn(next.i)
-      }
-    }
-
-    for (course <- courses if !course._1.learned) {
-      learn(course._1.i)
-    }
-    var learned = true
-    for (course <- courses if learned) {
-      if (!course._1.learned)
-        learned = false
-    }
-    learned
+    for (course <- courses if canLearn)
+      learn(course._1.i, new immutable.HashSet[Int])
+    canLearn
   }
 
 }
