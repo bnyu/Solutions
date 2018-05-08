@@ -17,8 +17,7 @@ import scala.collection.{immutable, mutable}
 object CourseSchedule {
 
   class Course(val i: Int) {
-    var visited = false
-    //var learned = false
+    var learned = false
   }
 
   def canFinish(numCourses: Int, prerequisites: Array[Array[Int]]): Boolean = {
@@ -33,20 +32,31 @@ object CourseSchedule {
 
     def learn(i: Int, way: immutable.HashSet[Int]): Unit = {
       val (course, pre) = courses(i)
-      if (canLearn && !course.visited) {
+      if (canLearn && !course.learned) {
         if (!way.contains(i)) {
           val nextWay = way + i
-          for (p <- pre if canLearn && !p.visited)
-            learn(p.i, nextWay)
-          course.visited = true
+          var p = pre
+          while (canLearn && p.nonEmpty) {
+            val c = p.head
+            if (!c.learned) {
+              learn(c.i, nextWay)
+            }
+            p = p.tail
+          }
+          course.learned = true
         } else {
           canLearn = false //cycle
         }
       }
     }
 
-    for ((course, _) <- courses if canLearn && !course.visited)
-      learn(course.i, new immutable.HashSet[Int])
+    var i = 0
+    while (canLearn && i < numCourses) {
+      if (!courses(i)._1.learned) {
+        learn(i, new immutable.HashSet[Int])
+      }
+      i += 1
+    }
     canLearn
   }
 

@@ -43,8 +43,14 @@ object CourseScheduleII {
         if (!way.contains(i)) {
           val nextWay = way + i
           //only all prerequisites ard learned, this course can learn
-          for (p <- pre if canLearn && !p.learned)
-            canLearn = learn(p.i, nextWay)
+          var p = pre
+          while (canLearn && p.nonEmpty) {
+            val c = p.head
+            if (!c.learned) {
+              canLearn = learn(c.i, nextWay)
+            }
+            p = p.tail
+          }
           if (canLearn) {
             course.learned = true
             index -= 1
@@ -57,8 +63,12 @@ object CourseScheduleII {
       course.learned
     }
 
-    for ((course, _) <- courses if canLearn && !course.learned)
-      learn(course.i, new immutable.HashSet[Int])
+    var i = 0
+    while (canLearn && i < numCourses) {
+      if (!courses(i)._1.learned)
+        learn(i, new immutable.HashSet[Int])
+      i += 1
+    }
     if (canLearn)
       learned
     else Array.emptyIntArray
