@@ -19,6 +19,7 @@ object TheSkylineProblem {
       val builds = buildings.sortBy(a => a(0))
       val skyline = new mutable.HashMap[Int, Array[Int]]() //key:x, valve:point
       var endX = 0 //skyline end x
+      var endY = 0
       var rightPoints = new mutable.MutableList[Array[Int]] //down stairs points
       for (build <- builds) {
         val li = build(0)
@@ -26,7 +27,7 @@ object TheSkylineProblem {
         val hi = build(2)
         if (skyline.isEmpty || li >= endX) { //non cover
           if (li == endX && li != 0) { //adjacent
-            val hh = rightPoints(rightPoints.length - 2)(1)
+            val hh = endY
             rightPoints.clear()
             if (hi != hh) {
               val h = if (hi > hh) hi else hh
@@ -53,7 +54,8 @@ object TheSkylineProblem {
             rightPoints += point
           }
           endX = ri
-        } else { //cover
+          endY = hi
+        } else if (hi > endY || ri > endX) { //cover
           var loop = true
           var pre = rightPoints.head
           var i = 1
@@ -103,8 +105,9 @@ object TheSkylineProblem {
                   if (right(1) == 0)
                     skyline.update(right.head, right)
                   right(1) = hi
+                  endY = hi
                   nextRight += right
-                } else {
+                } else if (theX != li) {
                   skyline.remove(theX)
                 }
               } else {
@@ -117,6 +120,7 @@ object TheSkylineProblem {
           }
 
           if (loop) { //ri > pre(0)
+            changed = true
             if (nextRight == null)
               nextRight = new mutable.MutableList[Array[Int]]
             val point = Array(ri, 0)
