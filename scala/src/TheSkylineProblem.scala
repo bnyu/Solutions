@@ -24,18 +24,34 @@ object TheSkylineProblem {
         val li = build(0)
         val ri = build(1)
         val hi = build(2)
-        if (skyline.isEmpty || li > endX) { //non cover
-          rightPoints.clear()
-          var point = Array(endX, 0) //last build end
-          if (endX > 0)
+        if (skyline.isEmpty || li >= endX) { //non cover
+          if (li == endX && li != 0) { //adjacent
+            val hh = rightPoints(rightPoints.length - 2)(1)
+            rightPoints.clear()
+            if (hi != hh) {
+              val h = if (hi > hh) hi else hh
+              var point = Array(endX, h)
+              skyline.update(point.head, point)
+              rightPoints += point
+              point = Array(ri, 0)
+              rightPoints += point
+            } else {
+              val point = Array(endX, hh)
+              rightPoints += point
+            }
+          } else {
+            rightPoints.clear()
+            var point = Array(endX, 0) //last build end
+            if (endX > 0)
+              skyline.update(point.head, point)
+
+            point = Array(li, hi)
+            rightPoints += point
             skyline.update(point.head, point)
 
-          point = Array(li, hi)
-          rightPoints += point
-          skyline.update(point.head, point)
-
-          point = Array(ri, 0) //not add to skyline now
-          rightPoints += point
+            point = Array(ri, 0) //not add to skyline now
+            rightPoints += point
+          }
           endX = ri
         } else { //cover
           var loop = true
@@ -52,7 +68,7 @@ object TheSkylineProblem {
             val theY = right(1)
             var continue = true
 
-            if (!changed && li > preX) {
+            if (!changed && li >= preX) {
               if (hi > preY) {
                 changed = true
                 nextRight = new mutable.MutableList[Array[Int]]
