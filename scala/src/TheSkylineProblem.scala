@@ -125,7 +125,16 @@ object TheSkylineProblem {
 
       val point = Array(endX, 0)
       skyline.update(point.head, point)
-      skyline.values.toList.sortBy(a => a.head)
+      val points = skyline.values.toList.sortBy(a => a.head)
+      var pre: Array[Int] = null
+      points.filter(p => {
+        var dup = false
+        if (pre != null) {
+          dup = p(1) == pre(1)
+        }
+        pre = p
+        !dup
+      })
     } else Nil
   }
 }
