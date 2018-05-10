@@ -29,17 +29,12 @@ object TheSkylineProblem {
           if (li == endX && li != 0) { //adjacent
             val hh = endY
             rightPoints.clear()
-            if (hi != hh) {
-              val h = if (hi > hh) hi else hh
-              var point = Array(endX, h)
-              skyline.update(point.head, point)
-              rightPoints += point
-              point = Array(ri, 0)
-              rightPoints += point
-            } else {
-              val point = Array(endX, hh)
-              rightPoints += point
-            }
+            val h = if (hi > hh) hi else hh
+            var point = Array(endX, h)
+            skyline.update(point.head, point)
+            rightPoints += point
+            point = Array(ri, 0)
+            rightPoints += point
           } else {
             rightPoints.clear()
             var point = Array(endX, 0) //last build end
