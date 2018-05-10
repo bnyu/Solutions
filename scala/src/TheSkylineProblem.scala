@@ -66,27 +66,29 @@ object TheSkylineProblem {
             val preY = pre(1)
             val theX = right(0)
             val theY = right(1)
-            var continue = true
 
-            if (!changed && li >= preX) {
-              if (hi > preY) {
-                changed = true
-                nextRight = new mutable.MutableList[Array[Int]]
-                val point = Array(li, hi) //up: record the higher
-                skyline.update(point.head, point)
-                nextRight += point
-              } else if (ri > theX && hi > theY) {
-                changed = true
-                continue = false //cause right point is modified already
-                nextRight = new mutable.MutableList[Array[Int]]
-                if (right(1) == 0)
-                  skyline.update(right.head, right)
-                right(1) = hi
-                nextRight += right
+            if (!changed) {
+              if (li >= preX) {
+                if (hi > preY) {
+                  changed = true
+                  nextRight = new mutable.MutableList[Array[Int]]
+                  if (li == preX)
+                    nextRight += pre
+                  val point = Array(li, hi) //up: record the higher
+                  skyline.update(point.head, point)
+                  nextRight += point
+                } else if (ri > theX) {
+                  changed = true
+                  nextRight = new mutable.MutableList[Array[Int]]
+                  if (li == preX)
+                    nextRight += pre
+                }
+              } else {
+                loop = false
               }
             }
 
-            if (changed && continue) {
+            if (changed) {
               if (ri < theX) {
                 if (hi > theY) {
                   // changed already
@@ -97,10 +99,15 @@ object TheSkylineProblem {
                 } // else no change
                 loop = false
               } else if (hi >= theY) {
-                skyline.remove(theX)
+                if (hi < preY) {
+                  if (right(1) == 0)
+                    skyline.update(right.head, right)
+                  right(1) = hi
+                  nextRight += right
+                } else {
+                  skyline.remove(theX)
+                }
               } else {
-                changed = true
-                right(1) = hi //down: record lower
                 nextRight += right
               }
             }
