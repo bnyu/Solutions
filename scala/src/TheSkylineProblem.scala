@@ -64,6 +64,7 @@ object TheSkylineProblem {
             val theX = right(0)
             val theY = right(1)
 
+            var skip = false
             if (!changed) {
               if (li >= preX) {
                 if (hi > preY) {
@@ -77,19 +78,25 @@ object TheSkylineProblem {
                 } else if (ri > theX) {
                   changed = true
                   nextRight = new mutable.MutableList[Array[Int]]
-                  if (li == preX)
+                  if (li == preX) {
                     nextRight += pre
+                  } else if (li > theX && hi > theY) {
+                    val point = Array(li, hi)
+                    skyline.update(point.head, point)
+                    nextRight += point
+                    skip = true
+                  }
                 }
               } else {
                 loop = false
               }
             }
 
-            if (changed) {
+            if (changed && !skip) {
               if (ri < theX) {
                 if (hi > theY) {
                   // changed already
-                  val point = Array(ri, preY) //
+                  val point = Array(ri, preY)
                   skyline.update(point.head, point)
                   nextRight += point
                   nextRight ++= rightPoints.drop(i)
@@ -97,11 +104,10 @@ object TheSkylineProblem {
                 loop = false
               } else if (hi >= theY) {
                 if (hi < preY) {
-                  if (right(1) == 0)
-                    skyline.update(right.head, right)
-                  right(1) = hi
+                  val point = Array(theX, hi) //can not modify right directly
+                  skyline.update(point.head, point)
                   endY = hi
-                  nextRight += right
+                  nextRight += point
                 } else if (theX != li) {
                   skyline.remove(theX)
                 }
@@ -110,7 +116,7 @@ object TheSkylineProblem {
               }
             }
 
-            pre = right
+            pre = right //reason right can not be modified
             i += 1
           }
 
