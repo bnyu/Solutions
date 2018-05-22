@@ -5,24 +5,14 @@
   */
 object PowerOfTwo {
   def isPowerOfTwo(n: Int): Boolean = {
-    if (n > 1) {
-      var p = 1 //power
-      var x = 1 //num
-      while (n > p) {
-        x = x << 1
-        p = p << 2
+    if (n > 0) {
+      var p = 1
+      var num = 0
+      for (_ <- 1 to 32) {
+        if ((p & n) == p) num += 1
+        p = p << 1
       }
-      var is = false
-      var a = x >> 1
-      var b = x
-      while (!is && b - a > 1) {
-        val i = (a + b) >> 1
-        val p = i * i
-        if (p == n) is = true
-        else if (p > n) b = i
-        else a = i
-      }
-      is || a * a == n || b * b == n
-    } else n == 0 || n == 1
+      num == 1
+    } else false
   }
 }
