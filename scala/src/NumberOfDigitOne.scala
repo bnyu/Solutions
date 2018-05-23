@@ -8,11 +8,11 @@ object NumberOfDigitOne {
   //1  ...   11 21  31  41  51  61  71  81  91 100 ...  101   111 121 131 141 ... 201 ...
   //     10 11 12 13 14 15 16 17 18 19                   111 112 113 ...
   def countDigitOne(n: Int): Int = {
-    var sum1 = 0
+    var sum1 = 0L
     if (n > 0) {
-      val num1s = new mutable.ArrayStack[(Int, Int)]()
-      var preX = 1
-      var x = 1
+      val num1s = new mutable.ArrayStack[(Long, Long)]()
+      var preX = 1L
+      var x = 1L
       var i = 0
       while (n >= x) {
         val num = i * preX
@@ -21,7 +21,7 @@ object NumberOfDigitOne {
         x *= 10
         i += 1
       }
-      var num = n
+      var num: Long = n
       while (i > 0) {
         val (x1, num1) = num1s.pop()
         val d = num / x1
@@ -34,6 +34,6 @@ object NumberOfDigitOne {
         i -= 1
       }
     }
-    sum1
+    sum1.toInt
   }
 }
