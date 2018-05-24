@@ -29,7 +29,7 @@ object SlidingWindowMaximum {
       val ans = new Array[Int](nums.length - k + 1)
       var maxIndex = 0
       var max = nums(0)
-      val after = new mutable.Queue[(Int, Int)]()
+      val after = new mutable.Queue[(Int, Int)]() //only need two
 
       for (i <- nums.indices) {
         if (maxIndex + k <= i) {
@@ -39,20 +39,22 @@ object SlidingWindowMaximum {
         }
 
         val n = nums(i)
+        println(n)
         if (n >= max) {
           max = n
           maxIndex = i
           after.clear()
-          val secondIndex = i + 1
-          if (secondIndex < nums.length)
-            after.enqueue((nums(secondIndex), secondIndex))
         } else if (after.nonEmpty) {
           val second = after.head
-          if (i > second._2) {
-            if (n >= second._1) {
-              after.clear()
-            }
+          if (n >= second._1) {
+            after.clear()
             after.enqueue((n, i))
+          } else {
+            val last = after.last
+            if (n > last._1) {
+              after.dropRight(1)
+              after.enqueue((n, i))
+            }
           }
         } else {
           after.enqueue((n, i))
@@ -60,6 +62,7 @@ object SlidingWindowMaximum {
         val index = i + 1 - k
         if (index >= 0) {
           ans(index) = max
+          println("====" + max)
         }
       }
       ans
