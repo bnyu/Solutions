@@ -10,26 +10,54 @@ import scala.collection.mutable
   * n does not exceed 1690.
   */
 object UglyNumberII {
-  def nthUglyNumber(n: Int): Int = {
-    val uglySet = new mutable.HashSet[Int]()
-    uglySet += 1
-    val isUgly = (n: Int) => n match {
-      case _ if n / 2 * 2 == n => uglySet.contains(n / 2)
-      case _ if n / 3 * 3 == n => uglySet.contains(n / 3)
-      case _ if n / 5 * 5 == n => uglySet.contains(n / 5)
-      case _ => false
+  private val uglyNumber = {
+    var i = 1
+    val x = (n: Int) => {
+      i *= n
+      i
     }
-    var index = 1
-    var num = 1
-    var ugly = 1
-    while (index < n) {
-      num += 1
-      if (isUgly(num)) {
-        ugly = num
-        index += 1
-        uglySet += ugly
+    val n2 = Array.fill(30)(x(2))
+    i = 1
+    val n3 = Array.fill(19)(x(3))
+    i = 1
+    val n5 = Array.fill(13)(x(5))
+
+    def multi(array: Seq[Int], array1: Seq[Int], break: Boolean): Seq[Int] = {
+      val list = new mutable.MutableList[Int]()
+      for (a <- array) {
+        var i = 0
+        var notOverflow = true
+        while ((!break || notOverflow) && i < array1.size) {
+          val a1 = array1(i)
+          val temp: Long = a.asInstanceOf[Long] * a1
+          i += 1
+          if (temp > Int.MaxValue)
+            notOverflow = false
+          else
+            list += temp.asInstanceOf[Int]
+        }
       }
+      list
     }
-    ugly
+
+    val n2x3 = multi(n2, n3, break = true)
+    val n2x5 = multi(n2, n5, break = true)
+    val n3x5 = multi(n3, n5, break = true)
+    val n2x3x5 = multi(n2, n3x5, break = false) //because of n3x5 is out of order
+
+    val uglySet = new mutable.TreeSet[Int]()
+    uglySet += 1
+    for (n <- n2) uglySet += n
+    for (n <- n3) uglySet += n
+    for (n <- n5) uglySet += n
+    for (n <- n2x3) uglySet += n
+    for (n <- n2x5) uglySet += n
+    for (n <- n3x5) uglySet += n
+    for (n <- n2x3x5) uglySet += n
+    uglySet.toArray
+  }
+
+  def nthUglyNumber(n: Int): Int = {
+    uglyNumber(n - 1)
   }
 }
