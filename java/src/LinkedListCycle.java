@@ -1,5 +1,3 @@
-import java.util.HashSet;
-
 /**
  * 141. Linked List Cycle
  * Given a linked list, determine if it has a cycle in it.
@@ -8,7 +6,7 @@ import java.util.HashSet;
 public class LinkedListCycle {
     public boolean hasCycle(ListNode head) {
         //so it allowed modify
-        ListNode marked = new ListNode(0);
+        ListNode marked = head;
         while (head != null) {
             if (head.next == marked) {
                 return true;

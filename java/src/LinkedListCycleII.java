@@ -19,4 +19,25 @@ public class LinkedListCycleII {
         }
         return null;
     }
+
+    //without using extra space
+    public ListNode detectCycle_0(ListNode head) {
+        if (head != null) {
+            return detect(head, head);
+        } else return null;
+    }
+
+    private ListNode detect(ListNode head, ListNode marked) {
+        ListNode origin = head.next;
+        if (origin == null) {
+            return null;
+        } else if (origin.next == marked) {
+            return origin;
+        } else {
+            head.next = marked;
+            ListNode cycle = detect(origin, marked);
+            head.next = origin;
+            return cycle;
+        }
+    }
 }

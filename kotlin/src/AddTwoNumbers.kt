@@ -21,13 +21,11 @@ class AddTwoNumbers {
                 sum = carry + listNode1.`val`
                 listNode1 = listNode1.next
             } else {
-                //智能转换也不是特别智能...
                 sum = carry + (listNode2?.`val` ?: 0)
                 listNode2 = listNode2?.next
             }
             val remainder = sum % 10
             carry = sum / 10
-            //因为next定义为可空类型 所以不允许直接赋值给非空类型 即使这里已经是一个实例化的ListNode
             addedListNode.next = ListNode(remainder)
             addedListNode = addedListNode.next!!
         }

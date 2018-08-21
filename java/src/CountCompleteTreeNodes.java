@@ -42,12 +42,12 @@ public class CountCompleteTreeNodes {
     }
 
     private int count(int h) {
-        int sum = 0;
+        int sum;
         int num = 1;
         for (int i = 0; i < h; ++i) {
-            sum += num;
-            num *= 2;
+            num = num << 1;
         }
+        sum = num - 1;
         return sum;
     }
 }

@@ -18,11 +18,9 @@ class LetterCombinationsOfAPhoneNumber {
         K0('0', " ");
 
         companion object {
+            val map = values().map { k -> Pair(k.num, k.letter) }.toMap()
             fun getLetter(num: Char): String {
-                for (keyboard in values())
-                    if (num == keyboard.num)
-                        return keyboard.letter
-                return ""
+                return map.getOrDefault(num, "")
             }
         }
     }

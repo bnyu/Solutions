@@ -3,7 +3,7 @@
  * Given a string, find the length of the longest substring without repeating characters.
  */
 class LongestSubstringWithoutRepeatingCharacters {
-    fun lengthOfLongestSubstring(s: String): Int {
+    fun lengthOfLongestSubstring_0(s: String): Int {
         if (s.isEmpty())
             return 0
         val sLen = s.length
@@ -58,16 +58,15 @@ class LongestSubstringWithoutRepeatingCharacters {
                 if (rightIndex - leftIndex > maxLen) {
                     var hasOtherDup = false
                     for (index in leftIndex + 1..rightIndex) {
-                        if (dupCharMap.containsKey(index)) {
-                            //Kotlin似乎暂时还没有不允许放入空元素的集合
-                            val dupChar = dupCharMap[index]!!
+                        val dupChar = dupCharMap[index]
+                        if (dupChar != null) {
                             if (dupMap.containsKey(dupChar)) {
                                 rightIndex = index
                                 hasOtherDup = true
                                 dupIndex = dupMap[dupChar]!!
                                 break
                             } else
-                                dupMap.put(dupChar, index)
+                                dupMap[dupChar] = index
                         }
                     }
                     dupMap.clear()
@@ -86,5 +85,42 @@ class LongestSubstringWithoutRepeatingCharacters {
         }
         return maxLen
     }
+
+    //看不懂之前咋写那么复杂
+    fun lengthOfLongestSubstring(s: String): Int {
+        var max = 0
+        if (!s.isEmpty()) {
+            var start = -1 //只需要一直记录两个重复的位置 不断往右移
+            var end = 0
+            val dupMap = HashMap<Char, Int>()
+            for (i in s.indices) {
+                val dupIndex = dupMap[s[i]]
+                if (dupIndex != null) { //3种情况
+                    if (dupIndex < start) {
+                        val len = i - start
+                        max = if (len > max) len else max
+                    } else if (dupIndex in start..end) {
+                        val len = i - dupIndex
+                        val len0 = i - 1 - start
+                        max = if (len > max) len else max
+                        max = if (len0 > max) len0 else max
+                        start = dupIndex
+                    } else if (dupIndex > end) {
+                        val len = i - 1 - start
+                        max = if (len > max) len else max
+                        start = dupIndex
+                    }
+                    end = i
+                }
+                dupMap[s[i]] = i
+            }
+            val len = s.length - 1 - start
+            max = if (len > max) len else max
+        }
+        return max
+    }
 }
 
+// a  b  a  b
+// b  a  a  b
+// a  a  b  b
