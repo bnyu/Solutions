@@ -21,39 +21,34 @@
   * [0,1,1],
   * [0,1,0]
   * ]
+  * Follow up:
+  * Could you solve it in-place? Remember that the board needs to be updated at the same time: You cannot update some cells first and then use their updated values to update other cells.
+  * In this question, we represent the board using a 2D array. In principle, the board is infinite, which would cause problems when the active area encroaches the border of the array. How would you address these problems?
   */
 object GameOfLife {
   def gameOfLife(board: Array[Array[Int]]): Unit = {
     val row = board.length
     val column = board(0).length
-    val neighbors = Array.fill(row)(Array.fill(column)(0))
+
+    def change(i: Int, j: Int): Unit = if (board(i)(j) <= 0) board(i)(j) -= 1 else board(i)(j) += 1
 
     def addLive(i: Int, j: Int): Unit = {
-      if (i > 0) neighbors(i - 1)(j) += 1
-      if (j > 0) neighbors(i)(j - 1) += 1
-      if (i > 0 && j > 0) neighbors(i - 1)(j - 1) += 1
-      if (i < row - 1) neighbors(i + 1)(j) += 1
-      if (j < column - 1) neighbors(i)(j + 1) += 1
-      if (i < row - 1 && j < column - 1) neighbors(i + 1)(j + 1) += 1
-      if (i > 0 && j < column - 1) neighbors(i - 1)(j + 1) += 1
-      if (i < row - 1 && j > 0) neighbors(i + 1)(j - 1) += 1
+      if (i > 0) change(i - 1, j)
+      if (j > 0) change(i, j - 1)
+      if (i > 0 && j > 0) change(i - 1, j - 1)
+      if (i < row - 1) change(i + 1, j)
+      if (j < column - 1) change(i, j + 1)
+      if (i < row - 1 && j < column - 1) change(i + 1, j + 1)
+      if (i > 0 && j < column - 1) change(i - 1, j + 1)
+      if (i < row - 1 && j > 0) change(i + 1, j - 1)
     }
 
     def update(i: Int, j: Int): Unit = {
-      if (board(i)(j) == 1) {
-        if (neighbors(i)(j) < 2 || neighbors(i)(j) > 3) board(i)(j) = 0
-      } else {
-        if (neighbors(i)(j) == 3) board(i)(j) = 1
-      }
+      val x = if (board(i)(j) > 1) board(i)(j) - 1 else board(i)(j)
+      board(i)(j) = if (x > 0) if (x < 2 || x > 3) 0 else 1 else if (x == -3) 1 else 0
     }
 
-    for (i <- 0 until row; j <- 0 until column) {
-      if (board(i)(j) == 1) {
-        addLive(i, j)
-      }
-    }
-    for (i <- 0 until row; j <- 0 until column) {
-      update(i, j)
-    }
+    for (i <- 0 until row; j <- 0 until column if board(i)(j) > 0) addLive(i, j)
+    for (i <- 0 until row; j <- 0 until column) update(i, j)
   }
 }
