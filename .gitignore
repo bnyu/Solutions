@@ -6,4 +6,6 @@
 /java/test/
 /kotlin/test/
 /scala/test/
+*.iml
+*.jar
 
