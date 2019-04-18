@@ -21,7 +21,7 @@ object ConstructBinaryTreeFromPreorderAndInorderTraversal {
       val orderMap: Map[Int, Int] = (0 until length).map(i => (inorder(i), i)).toMap
 
       def insert(root: TreeNode, value: Int): Unit = {
-        if (orderMap(root.value) < orderMap(value)) {
+        if (orderMap(root.`val`) < orderMap(value)) {
           if (root.right == null)
             root.right = new TreeNode(value)
           else

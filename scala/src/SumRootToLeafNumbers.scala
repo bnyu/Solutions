@@ -12,7 +12,7 @@ object SumRootToLeafNumbers {
     var total = 0
 
     def addNum(root: TreeNode, num: Int): Unit = {
-      val n = 10 * num + root.value
+      val n = 10 * num + root.`val`
       if (root.left == null && root.right == null) {
         total += n
       } else {

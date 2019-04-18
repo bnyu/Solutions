@@ -12,7 +12,7 @@ object BinaryTreePreorderTraversal {
     var loop = true
     while (loop) {
       if (node != null) {
-        ans += node.value
+        ans += node.`val`
         if (node.right != null)
           stack += node.right
         node = node.left

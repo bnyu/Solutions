@@ -9,7 +9,7 @@ object SameTree {
     def traversal(p: TreeNode, q: TreeNode): Boolean = {
       if (isSame) {
         if (p != null && q != null) {
-          isSame = p.value == q.value &&
+          isSame = p.`val` == q.`val` &&
             traversal(p.left, q.left) && traversal(p.right, q.right)
         } else if (p != null || q != null)
           isSame = false

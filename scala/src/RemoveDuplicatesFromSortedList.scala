@@ -11,14 +11,14 @@ object RemoveDuplicatesFromSortedList {
     var preNode = head
     var node = head.next
     while (node != null) {
-      if (node.x != preNode.x) {
+      if (node.`val` != preNode.`val`) {
         nonDupNode.next = preNode
         nonDupNode = nonDupNode.next
         preNode = node
       }
       node = node.next
     }
-    if (nonDupNode.x != preNode.x) {
+    if (nonDupNode.`val` != preNode.`val`) {
       preNode.next = null
       nonDupNode.next = preNode
     }

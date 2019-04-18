@@ -4,7 +4,7 @@
   * Note: Given m, n satisfy the following condition: 1 ≤ m ≤ n ≤ length of list.
   */
 object ReverseLinkedListII {
-  private val temp = new ListNode()
+  private val temp = new ListNode(0)
 
   def reverseBetween(head: ListNode, m: Int, n: Int): ListNode = {
     if (m == n) head else {

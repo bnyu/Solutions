@@ -23,11 +23,11 @@ object ValidateBinarySearchTree {
         node = stack.last
         stack = stack.dropRight(1)
         if (gotFirst) {
-          isValid = node.value > preValue
-          preValue = node.value
+          isValid = node.`val` > preValue
+          preValue = node.`val`
         } else {
           gotFirst = true
-          preValue = node.value
+          preValue = node.`val`
         }
         node = node.right
       } else

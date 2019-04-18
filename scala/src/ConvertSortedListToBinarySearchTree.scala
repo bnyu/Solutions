@@ -8,7 +8,7 @@ object ConvertSortedListToBinarySearchTree {
     val nums = new mutable.MutableList[Int]
     var node = head
     while (node != null) {
-      nums += node.x
+      nums += node.`val`
       node = node.next
     }
     ConvertSortedArrayToBinarySearchTree.sortedArrayToBST(nums.toArray)

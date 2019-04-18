@@ -13,7 +13,7 @@ object BinaryTreeInorderTraversal {
     def traversal(node: TreeNode): Unit = {
       if (node != null) {
         traversal(node.left)
-        values += node.value
+        values += node.`val`
         traversal(node.right)
       }
     }
@@ -37,7 +37,7 @@ object BinaryTreeInorderTraversal {
       if (stack.nonEmpty) {
         node = stack.last
         stack = stack.dropRight(1)
-        values += node.value
+        values += node.`val`
         node = node.right
       } else
         loop = false

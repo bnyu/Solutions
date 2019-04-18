@@ -17,7 +17,7 @@ object UniqueBinarySearchTreesII {
           var theNode = node
           while (loop) {
             val copiedRoot = copy(root)
-            val route = search(copiedRoot, theNode.value, Nil)
+            val route = search(copiedRoot, theNode.`val`, Nil)
             val copiedNode = route.head
 
             val newBiggest = new TreeNode(value)
@@ -59,7 +59,7 @@ object UniqueBinarySearchTreesII {
   }
 
   private def copy(root: TreeNode): TreeNode = {
-    val copied = new TreeNode(root.value)
+    val copied = new TreeNode(root.`val`)
     if (root.left != null)
       copied.left = copy(root.left)
     if (root.right != null)
@@ -68,9 +68,9 @@ object UniqueBinarySearchTreesII {
   }
 
   private def search(root: TreeNode, value: Int, route: List[TreeNode]): List[TreeNode] = {
-    if (root.value == value)
+    if (root.`val` == value)
       root :: route
-    else if (root.value < value)
+    else if (root.`val` < value)
       search(root.right, value, root :: route)
     else
       search(root.left, value, root :: route)

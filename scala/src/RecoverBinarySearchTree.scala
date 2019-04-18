@@ -16,7 +16,7 @@ object RecoverBinarySearchTree {
         inorder(root.left, pre)
       else //root doesn't has a left child, root's predecessor is iterative father until that is a right child
         pre
-      if (node != null && node.value >= root.value) {
+      if (node != null && node.`val` >= root.`val`) {
         //because meet bigger firstly
         if (found == 0) {
           mistake(0) = node
@@ -35,9 +35,9 @@ object RecoverBinarySearchTree {
 
     inorder(root, null)
     if (found > 0) {
-      val temp = mistake(0).value
-      mistake(0).value = mistake(1).value
-      mistake(1).value = temp
+      val temp = mistake(0).`val`
+      mistake(0).`val` = mistake(1).`val`
+      mistake(1).`val` = temp
     }
   }
 }

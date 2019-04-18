@@ -10,7 +10,7 @@ object SymmetricTree {
 
       def isSymmetric_r(left: TreeNode, right: TreeNode): Boolean = {
         if (left != null && right != null) {
-          left.value == right.value && isSymmetric_r(left.left, right.right) && isSymmetric_r(left.right, right.left)
+          left.`val` == right.`val` && isSymmetric_r(left.left, right.right) && isSymmetric_r(left.right, right.left)
         } else if (left != null || right != null)
           false
         else true
@@ -30,7 +30,7 @@ object SymmetricTree {
       var right = root.right
       while (isSame && loop) {
         if (left != null && right != null) {
-          isSame = left.value == right.value
+          isSame = left.`val` == right.`val`
           if (isSame && left.left != null && right.right != null)
             stack += ((left.left, right.right))
           else if (left.left != null || right.right != null)

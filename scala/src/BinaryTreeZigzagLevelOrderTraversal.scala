@@ -17,10 +17,10 @@ object BinaryTreeZigzagLevelOrderTraversal {
         val zigzag = if (level % 2 == 1) treeLevel.toList else treeLevel.toList.reverse
         list += zigzag
         treeLevel = new mutable.Queue[Int]
-        treeLevel.enqueue(root.value)
+        treeLevel.enqueue(root.`val`)
         storeLevel = level
       } else {
-        treeLevel.enqueue(root.value)
+        treeLevel.enqueue(root.`val`)
       }
       if (root.left != null)
         queens.enqueue((root.left, level + 1))
