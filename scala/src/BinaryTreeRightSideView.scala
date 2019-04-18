@@ -20,7 +20,7 @@ object BinaryTreeRightSideView {
       var (node, depth) = stack.pop()
       do {
         if (depth == right.length)
-          right += node.value
+          right += node.`val`
         depth += 1
         if (node.left != null)
           stack.push(node.left, depth)

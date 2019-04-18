@@ -4,12 +4,12 @@
   */
 object RemoveLinkedListElements {
   def removeElements(head: ListNode, `val`: Int): ListNode = {
-    val temp = new ListNode()
+    val temp = new ListNode(0)
     temp.next = head
     var pre = temp
     var node = temp.next
     while (node != null) {
-      if (node.x == `val`) {
+      if (node.`val` == `val`) {
         pre.next = null
       } else {
         pre.next = node

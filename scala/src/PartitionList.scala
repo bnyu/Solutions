@@ -5,13 +5,13 @@
   */
 object PartitionList {
   def partition(head: ListNode, x: Int): ListNode = {
-    val gHead = new ListNode()
-    val lHead = new ListNode()
+    val gHead = new ListNode(0)
+    val lHead = new ListNode(0)
     var gNode = gHead
     var lNode = lHead
     var node = head
     while (node != null) {
-      if (node.x < x) {
+      if (node.`val` < x) {
         lNode.next = node
         lNode = node
       } else {

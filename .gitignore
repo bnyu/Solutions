@@ -1,7 +1,11 @@
 # Created by .ignore support plugin (hsz.mobi)
 /.idea/
 /out/
+/target/
+/lib/
+/java/test/
 /kotlin/test/
 /scala/test/
-target/
 *.iml
+*.jar
+

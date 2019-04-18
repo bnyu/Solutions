@@ -23,14 +23,14 @@ object BinaryTreePaths{
       } else {
         val str0 = string + arrow
         if (root.left != null)
-          strPath(root.left, str0 + root.left.value)
+          strPath(root.left, str0 + root.left.`val`)
         if (root.right != null)
-          strPath(root.right, str0 + root.right.value)
+          strPath(root.right, str0 + root.right.`val`)
       }
     }
 
     if (root != null)
-      strPath(root, root.value.toString)
+      strPath(root, root.`val`.toString)
     ans.toList
   }
 }

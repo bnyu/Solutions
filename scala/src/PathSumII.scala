@@ -13,14 +13,14 @@ object PathSumII {
           allPath += path
       } else {
         if (root.left != null)
-          addSum(root.left, pathSum + root.left.value, path ::: root.left.value :: Nil)
+          addSum(root.left, pathSum + root.left.`val`, path ::: root.left.`val` :: Nil)
         if (root.right != null)
-          addSum(root.right, pathSum + root.right.value, path ::: root.right.value :: Nil)
+          addSum(root.right, pathSum + root.right.`val`, path ::: root.right.`val` :: Nil)
       }
     }
 
     if (root != null)
-      addSum(root, root.value, root.value :: Nil)
+      addSum(root, root.`val`, root.`val` :: Nil)
     allPath.toList
   }
 }

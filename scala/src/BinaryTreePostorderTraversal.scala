@@ -41,7 +41,7 @@ object BinaryTreePostorderTraversal {
           loop = true
         } else {
           stack = stack.dropRight(1)
-          ans += child.value
+          ans += child.`val`
           record = child
         }
       }

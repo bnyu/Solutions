@@ -11,15 +11,15 @@ object PathSum {
           has = pathSum == sum
         } else {
           if (root.left != null)
-            addSum(root.left, pathSum + root.left.value)
+            addSum(root.left, pathSum + root.left.`val`)
           if (root.right != null)
-            addSum(root.right, pathSum + root.right.value)
+            addSum(root.right, pathSum + root.right.`val`)
         }
       }
     }
 
     if (root != null)
-      addSum(root, root.value)
+      addSum(root, root.`val`)
     has
   }
 }
