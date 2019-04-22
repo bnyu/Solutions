@@ -14,16 +14,21 @@
 object DistinctSubsequences {
   def numDistinct(s: String, t: String): Int = {
     if (t.length > 0 && s.length >= t.length) {
+      val subs = Array.fill(t.length)(0)
+      val subs1 = Array.fill(t.length)(0)
 
-      def subs(si: Int, ti: Int): Int = {
-        var n = 0
-        if (ti == t.length - 1) n = 1 else for (si <- si + 1 until s.length if t(ti + 1) == s(si)) n += subs(si, ti + 1)
-        n
+      for (i <- s.indices) {
+        val c = s(i)
+        for (j <- 0 to i if j < t.length && s.length - i >= t.length - j)
+          if (c == t(j))
+            subs1(j) = if (j == 0) 1 else subs(j - 1)
+
+        t.indices.foreach(i => {
+          subs(i) += subs1(i)
+          subs1(i) = 0
+        })
       }
-
-      var n = 0
-      for (i <- s.indices if s(i) == t(0)) n += subs(i, 0)
-      n
+      subs.last
     } else 0
   }
 }
