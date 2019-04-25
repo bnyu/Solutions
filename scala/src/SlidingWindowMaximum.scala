@@ -24,41 +24,18 @@ object SlidingWindowMaximum {
       ans(0) = nums.max
       ans
     } else {
-      val ans = new Array[Int](nums.length - k + 1)
-      var maxIndex = 0
-      var max = nums(0)
-      var secondIndex = 1
-      var lastIndex = 2
-
+      val maximum = new Array[Int](nums.length)
+      var cache: List[(Int, Int)] = Nil //(index, num)
       for (i <- nums.indices) {
-        if (maxIndex + k <= i) {
-          maxIndex = secondIndex
-          max = nums(secondIndex)
-          secondIndex = lastIndex
-          lastIndex = lastIndex + 1
+        if (cache.nonEmpty && cache.head._1 + k <= i) {
+          cache = cache.tail
         }
         val n = nums(i)
-        if (n >= max) {
-          max = n
-          maxIndex = i
-          secondIndex = i + 1
-          lastIndex = i + 2
-        } else if (i > secondIndex) {
-          if (n >= nums(secondIndex)) {
-            secondIndex = i
-            lastIndex = i + 1
-          } else if (i > lastIndex) {
-            if (n >= nums(lastIndex))
-            lastIndex = i
-          }
-        }
-        val index = i + 1 - k
-        if (index >= 0) {
-          ans(index) = max
-        }
+        cache = cache.takeWhile(_._2 > n)
+        cache = cache ++ List((i, n))
+        maximum(i) = cache.head._2
       }
-      ans
+      maximum.drop(k - 1)
     }
   }
 }
-
